@@ -61,18 +61,6 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ASSIST_PARTY_TANK {
-            get {
-                return ((bool)(this["ASSIST_PARTY_TANK"]));
-            }
-            set {
-                this["ASSIST_PARTY_TANK"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool COMBAT_ROUTINE_PRECOMBATBUFF {
             get {
@@ -133,13 +121,13 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AUTO_TARGET {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int TARGETING_MODE {
             get {
-                return ((bool)(this["AUTO_TARGET"]));
+                return ((int)(this["TARGETING_MODE"]));
             }
             set {
-                this["AUTO_TARGET"] = value;
+                this["TARGETING_MODE"] = value;
             }
         }
         
@@ -164,6 +152,30 @@ namespace MudBase.Properties {
             }
             set {
                 this["HOTKEY_PAUSE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string HOTKEY_TARGET_MODE {
+            get {
+                return ((string)(this["HOTKEY_TARGET_MODE"]));
+            }
+            set {
+                this["HOTKEY_TARGET_MODE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int HOTKEY_TARGET_MODE_MODIFIER {
+            get {
+                return ((int)(this["HOTKEY_TARGET_MODE_MODIFIER"]));
+            }
+            set {
+                this["HOTKEY_TARGET_MODE_MODIFIER"] = value;
             }
         }
     }

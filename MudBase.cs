@@ -58,10 +58,10 @@ namespace MudBase
                                     new Decorator(r => Settings.Default.COMBAT_ROUTINE_COMBATBUFF,
                                         RoutineManager.Current.CombatBuffBehavior
                                     ),
-                                    new Decorator(req => (PartyManager.IsInParty && Settings.Default.ASSIST_PARTY_TANK && (!Core.Player.HasTarget || !Core.Player.CurrentTarget.CanAttack)),
+                                    new Decorator(req => (PartyManager.IsInParty && TargetingModes[Settings.Default.TARGETING_MODE].Equals("Assist Tank") && GetPartyTank() != null && (!Core.Player.HasTarget || !Core.Player.CurrentTarget.CanAttack)),
                                         new TreeSharp.Action(a => AssistPartyMember(GetPartyTank()))
                                     ),
-                                    new Decorator(req => !Settings.Default.ASSIST_PARTY_TANK && Settings.Default.AUTO_TARGET && (!Core.Player.HasTarget),
+                                    new Decorator(req => TargetingModes[Settings.Default.TARGETING_MODE].Equals("Nearest Enemy") && (!Core.Player.HasTarget),
                                         new TreeSharp.Action(a => {
                                             GameObject target = GetClosestEnemyByName(TargetMobList);
                                             if (target != null)
@@ -80,10 +80,14 @@ namespace MudBase
         }
 
         public static String[] ModifierKeyStrings = { "None", "Shift", "Control", "Alt" };
+        public static String[] TargetingModes = { "None", "Assist Tank", "Nearest Enemy" };
         private static Hotkey _hotkeyPause;
+        private static Hotkey _hotkeyTargetMode;
         public static void ResetHotkeys()
         {
             UnregisterHotkey(_hotkeyPause);
+            UnregisterHotkey(_hotkeyTargetMode);
+            // PAUSE HOTKEY
             Logging.Write(LogLevel.INFO, "Setting Up Hotkeys");
             _hotkeyPause = HotkeyManager.Register("HK_MUD_PAUSE", (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_PAUSE.ToUpper()), (ModifierKeys)Enum.Parse(typeof(ModifierKeys), ModifierKeyStrings[Settings.Default.HOTKEY_PAUSE_MODIFIER]), a =>
             {
@@ -92,6 +96,18 @@ namespace MudBase
                     Logging.Write(LogLevel.PRIMARY, "Paused");
                 else
                     Logging.Write(LogLevel.PRIMARY, "Unpaused");
+            });
+            Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyPause.ToString());
+            // TARGET MODE HOTKEY
+            _hotkeyPause = HotkeyManager.Register("HK_MUD_TARGET", (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_TARGET_MODE.ToUpper()), (ModifierKeys)Enum.Parse(typeof(ModifierKeys), ModifierKeyStrings[Settings.Default.HOTKEY_TARGET_MODE_MODIFIER]), a =>
+            {
+                Logging.Write(LogLevel.PRIMARY, "Previous Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
+                if(Settings.Default.TARGETING_MODE == (TargetingModes.Length - 1))
+                    Settings.Default.TARGETING_MODE = 0;
+                else
+                    Settings.Default.TARGETING_MODE = (Settings.Default.TARGETING_MODE + 1);
+                SettingsForm.SelectTargetingMode(Settings.Default.TARGETING_MODE);
+                Logging.Write(LogLevel.PRIMARY, "Current Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
             });
             Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyPause.ToString());
         }
