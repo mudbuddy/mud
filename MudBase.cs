@@ -51,11 +51,13 @@ namespace MudBase
                 return _root ?? (_root =
                     new Decorator( req => !Settings.Default.IS_PAUSED && !Core.Player.IsCasting && !Core.Player.IsMounted && !MovementManager.IsMoving,
                         new PrioritySelector(
-                            new Decorator(r => !Core.Player.InCombat, RoutineManager.Current.PreCombatBuffBehavior),
-                            new Decorator(r => (Core.Player.InCombat || Settings.Default.HEAL_OUT_OF_COMBAT), RoutineManager.Current.HealBehavior),
+                            new Decorator(r => !Core.Player.InCombat && Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF, RoutineManager.Current.PreCombatBuffBehavior),
+                            new Decorator(r => (Core.Player.InCombat || Settings.Default.HEAL_OUT_OF_COMBAT) && Settings.Default.COMBAT_ROUTINE_HEAL, RoutineManager.Current.HealBehavior),
                             new Decorator(r => (Core.Player.InCombat || Settings.Default.ATTACK_OUT_OF_COMBAT),
                                 new PrioritySelector (
-                                    RoutineManager.Current.CombatBuffBehavior,
+                                    new Decorator(r => Settings.Default.COMBAT_ROUTINE_COMBATBUFF,
+                                        RoutineManager.Current.CombatBuffBehavior
+                                    ),
                                     new Decorator(req => (PartyManager.IsInParty && Settings.Default.ASSIST_PARTY_TANK && (!Core.Player.HasTarget || !Core.Player.CurrentTarget.CanAttack)),
                                         new TreeSharp.Action(a => AssistPartyMember(GetPartyTank()))
                                     ),
@@ -66,7 +68,7 @@ namespace MudBase
                                                 target.Target();
                                         })
                                     ),
-                                    new Decorator(req => TargetMobList.Count == 0 || TargetMobList.First().Length == 0 || (Core.Player.HasTarget && (TargetMobList.Contains(Core.Player.CurrentTarget.Name))),
+                                    new Decorator(req => (TargetMobList.Count == 0 || TargetMobList.First().Length == 0 || (Core.Player.HasTarget && (TargetMobList.Contains(Core.Player.CurrentTarget.Name)))) && Settings.Default.COMBAT_ROUTINE_COMBAT,
                                         RoutineManager.Current.CombatBehavior
                                     )
                                 )
