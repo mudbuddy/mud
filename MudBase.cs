@@ -89,27 +89,38 @@ namespace MudBase
             UnregisterHotkey(_hotkeyTargetMode);
             // PAUSE HOTKEY
             Logging.Write(LogLevel.INFO, "Setting Up Hotkeys");
-            _hotkeyPause = HotkeyManager.Register("HK_MUD_PAUSE", (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_PAUSE.ToUpper()), (ModifierKeys)Enum.Parse(typeof(ModifierKeys), ModifierKeyStrings[Settings.Default.HOTKEY_PAUSE_MODIFIER]), a =>
+            Keys key;
+            try {key = (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_PAUSE.ToUpper());}
+                catch (Exception e) {key = Keys.None;}
+            if (key != Keys.None)
             {
-                Settings.Default.IS_PAUSED = !Settings.Default.IS_PAUSED;
-                if (Settings.Default.IS_PAUSED)
-                    Logging.Write(LogLevel.PRIMARY, "Paused");
-                else
-                    Logging.Write(LogLevel.PRIMARY, "Unpaused");
-            });
-            Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyPause.ToString());
+                _hotkeyPause = HotkeyManager.Register("HK_MUD_PAUSE", key, (ModifierKeys)Enum.Parse(typeof(ModifierKeys), ModifierKeyStrings[Settings.Default.HOTKEY_PAUSE_MODIFIER]), a =>
+                {
+                    Settings.Default.IS_PAUSED = !Settings.Default.IS_PAUSED;
+                    if (Settings.Default.IS_PAUSED)
+                        Logging.Write(LogLevel.PRIMARY, "Paused");
+                    else
+                        Logging.Write(LogLevel.PRIMARY, "Unpaused");
+                });
+                Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyPause.ToString());
+            }
             // TARGET MODE HOTKEY
-            _hotkeyPause = HotkeyManager.Register("HK_MUD_TARGET", (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_TARGET_MODE.ToUpper()), (ModifierKeys)Enum.Parse(typeof(ModifierKeys), ModifierKeyStrings[Settings.Default.HOTKEY_TARGET_MODE_MODIFIER]), a =>
+            try { key = (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_TARGET_MODE.ToUpper()); }
+                catch (Exception e) { key = Keys.None; }
+            if (key != Keys.None)
             {
-                Logging.Write(LogLevel.PRIMARY, "Previous Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
-                if(Settings.Default.TARGETING_MODE == (TargetingModes.Length - 1))
-                    Settings.Default.TARGETING_MODE = 0;
-                else
-                    Settings.Default.TARGETING_MODE = (Settings.Default.TARGETING_MODE + 1);
-                SettingsForm.SelectTargetingMode(Settings.Default.TARGETING_MODE);
-                Logging.Write(LogLevel.PRIMARY, "Current Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
-            });
-            Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyPause.ToString());
+                _hotkeyTargetMode = HotkeyManager.Register("HK_MUD_TARGET", (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_TARGET_MODE.ToUpper()), (ModifierKeys)Enum.Parse(typeof(ModifierKeys), ModifierKeyStrings[Settings.Default.HOTKEY_TARGET_MODE_MODIFIER]), a =>
+                {
+                    Logging.Write(LogLevel.PRIMARY, "Previous Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
+                    if (Settings.Default.TARGETING_MODE == (TargetingModes.Length - 1))
+                        Settings.Default.TARGETING_MODE = 0;
+                    else
+                        Settings.Default.TARGETING_MODE = (Settings.Default.TARGETING_MODE + 1);
+                    SettingsForm.SelectTargetingMode(Settings.Default.TARGETING_MODE);
+                    Logging.Write(LogLevel.PRIMARY, "Current Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
+                });
+                Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyTargetMode.ToString());
+            }
         }
 
         public static void UnregisterHotkey(Hotkey hk)
@@ -123,7 +134,7 @@ namespace MudBase
 
         public static List<String> TargetMobList = Settings.Default.TARGET_MOB_LIST.Split('\n').ToList();
         public GameObject GetClosestEnemyByName(List<String> names) {
-            Logging.Write(LogLevel.INFO, "Finding nearest enemy in list of ("+names+")...");
+            Logging.Write(LogLevel.INFO, "Finding nearest enemy in list of ("+names.ToArray()+")...");
             return GameObjectManager.GameObjects.Where(u => u.CanAttack).OrderBy(u => u.Distance2D()).Where(u => names.Count == 0 || (names.Count == 1 && names.First().Equals("")) || names.Contains(u.Name)).FirstOrDefault();
         }
 
