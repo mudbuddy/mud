@@ -134,7 +134,7 @@ namespace MudBase
 
         public static List<String> TargetMobList = Settings.Default.TARGET_MOB_LIST.Split('\n').ToList();
         public GameObject GetClosestEnemyByName(List<String> names) {
-            Logging.Write(LogLevel.INFO, "Finding nearest enemy in list of ("+names.ToArray()+")...");
+            Logging.Write(LogLevel.INFO, "Finding nearest enemy to attack...");
             return GameObjectManager.GameObjects.Where(u => u.CanAttack).OrderBy(u => u.Distance2D()).Where(u => names.Count == 0 || (names.Count == 1 && names.First().Equals("")) || names.Contains(u.Name)).FirstOrDefault();
         }
 
