@@ -23,7 +23,7 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
-- `1.0.3`: improved Targeting Mode / hotkeys
-- `1.0.2`: null check on GetPartyTank to prevent Log spam when Tank not in group
+- `1.0.3`: Improved Targeting Mode / hotkeys
+- `1.0.2`: Null check on GetPartyTank to prevent Log spam when Tank not in group
 - `1.0.1`: Fix for CR toggle
 - `1.0.0`: Release
