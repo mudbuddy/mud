@@ -143,7 +143,7 @@ namespace MudBase
         {
             if (!PartyManager.IsInParty)
             {
-                Logging.Write(LogLevel.DANGER, "No Party Tank, Not in party!");
+                //Logging.Write(LogLevel.DANGER, "No Party Tank, Not in party!");
                 return null;
             }
             foreach (PartyMember p in PartyManager.AllMembers)
@@ -154,23 +154,25 @@ namespace MudBase
                     case ClassJobType.Warrior:
                     case ClassJobType.Paladin:
                     case ClassJobType.Gladiator:
-                        Logging.Write(LogLevel.SUCCESS,"Found Party Tank: " + p.Name);
+                        //Logging.Write(LogLevel.SUCCESS,"Found Party Tank: " + p.Name);
                         return p;
                 }
             }
-            Logging.Write(LogLevel.DANGER, "No Party Tank Found!");
+            //Logging.Write(LogLevel.DANGER, "No Party Tank Found!");
             return null;
         }
 
         public void AssistPartyMember(PartyMember p)
         {
-            Logging.Write(LogLevel.INFO, "Attempting to assist " + p.Name);
             if (p != null && p.IsInObjectManager)
             {
                 Character pm = (Character)GameObjectManager.GetObjectByObjectId(p.ObjectId);
                 GameObject assist = GameObjectManager.GetObjectByObjectId(pm.CurrentTargetId);
                 if (assist != null && assist.IsTargetable && assist.IsValid && assist.CanAttack)
+                {
+                    Logging.Write(LogLevel.INFO, "Assisting " + p.Name);
                     assist.Target();
+                }
             }
         }
     }
