@@ -122,12 +122,12 @@ namespace MudBase.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int TARGETING_MODE {
+        public int SELECTED_TARGETING_MODE {
             get {
-                return ((int)(this["TARGETING_MODE"]));
+                return ((int)(this["SELECTED_TARGETING_MODE"]));
             }
             set {
-                this["TARGETING_MODE"] = value;
+                this["SELECTED_TARGETING_MODE"] = value;
             }
         }
         
@@ -176,6 +176,18 @@ namespace MudBase.Properties {
             }
             set {
                 this["HOTKEY_TARGET_MODE_MODIFIER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int SELECTED_TARGET_LIST_TYPE {
+            get {
+                return ((int)(this["SELECTED_TARGET_LIST_TYPE"]));
+            }
+            set {
+                this["SELECTED_TARGET_LIST_TYPE"] = value;
             }
         }
     }

@@ -26,7 +26,7 @@
     <Setting Name="TARGET_MOB_LIST" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="TARGETING_MODE" Type="System.Int32" Scope="User">
+    <Setting Name="SELECTED_TARGETING_MODE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="HOTKEY_PAUSE_MODIFIER" Type="System.Int32" Scope="User">
@@ -39,6 +39,9 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="HOTKEY_TARGET_MODE_MODIFIER" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SELECTED_TARGET_LIST_TYPE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

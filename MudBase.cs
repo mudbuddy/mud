@@ -58,17 +58,17 @@ namespace MudBase
                                     new Decorator(r => Settings.Default.COMBAT_ROUTINE_COMBATBUFF,
                                         RoutineManager.Current.CombatBuffBehavior
                                     ),
-                                    new Decorator(req => (PartyManager.IsInParty && TargetingModes[Settings.Default.TARGETING_MODE].Equals("Assist Tank") && GetPartyTank() != null && (!Core.Player.HasTarget || !Core.Player.CurrentTarget.CanAttack)),
+                                    new Decorator(req => (PartyManager.IsInParty && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank") && GetPartyTank() != null && (!Core.Player.HasTarget || !Core.Player.CurrentTarget.CanAttack)),
                                         new TreeSharp.Action(a => AssistPartyMember(GetPartyTank()))
                                     ),
-                                    new Decorator(req => TargetingModes[Settings.Default.TARGETING_MODE].Equals("Nearest Enemy") && (!Core.Player.HasTarget),
+                                    new Decorator(req => TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Nearest Enemy") && (!Core.Player.HasTarget),
                                         new TreeSharp.Action(a => {
                                             GameObject target = GetClosestEnemyByName(TargetMobList);
                                             if (target != null)
                                                 target.Target();
                                         })
                                     ),
-                                    new Decorator(req => (TargetMobList.Count == 0 || TargetMobList.First().Length == 0 || (Core.Player.HasTarget && (TargetMobList.Contains(Core.Player.CurrentTarget.Name)))) && Settings.Default.COMBAT_ROUTINE_COMBAT,
+                                    new Decorator(req => (TargetMobList.Count == 0 || TargetMobList.First().Length == 0 || (Core.Player.HasTarget && ((TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist") && !TargetMobList.Contains(Core.Player.CurrentTarget.Name)) || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") && TargetMobList.Contains(Core.Player.CurrentTarget.Name))))) && Settings.Default.COMBAT_ROUTINE_COMBAT,
                                         RoutineManager.Current.CombatBehavior
                                     )
                                 )
@@ -81,6 +81,7 @@ namespace MudBase
 
         public static String[] ModifierKeyStrings = { "None", "Shift", "Control", "Alt" };
         public static String[] TargetingModes = { "None", "Assist Tank", "Nearest Enemy" };
+        public static String[] TargetListTypes = { "Whitelist", "Blacklist" };
         private static Hotkey _hotkeyPause;
         private static Hotkey _hotkeyTargetMode;
         public static void ResetHotkeys()
@@ -111,13 +112,13 @@ namespace MudBase
             {
                 _hotkeyTargetMode = HotkeyManager.Register("HK_MUD_TARGET", (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_TARGET_MODE.ToUpper()), (ModifierKeys)Enum.Parse(typeof(ModifierKeys), ModifierKeyStrings[Settings.Default.HOTKEY_TARGET_MODE_MODIFIER]), a =>
                 {
-                    Logging.Write(LogLevel.PRIMARY, "Previous Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
-                    if (Settings.Default.TARGETING_MODE == (TargetingModes.Length - 1))
-                        Settings.Default.TARGETING_MODE = 0;
+                    Logging.Write(LogLevel.PRIMARY, "Previous Targeting Mode: " + TargetingModes[Settings.Default.SELECTED_TARGETING_MODE]);
+                    if (Settings.Default.SELECTED_TARGETING_MODE == (TargetingModes.Length - 1))
+                        Settings.Default.SELECTED_TARGETING_MODE = 0;
                     else
-                        Settings.Default.TARGETING_MODE = (Settings.Default.TARGETING_MODE + 1);
-                    SettingsForm.SelectTargetingMode(Settings.Default.TARGETING_MODE);
-                    Logging.Write(LogLevel.PRIMARY, "Current Targeting Mode: " + TargetingModes[Settings.Default.TARGETING_MODE]);
+                        Settings.Default.SELECTED_TARGETING_MODE = (Settings.Default.SELECTED_TARGETING_MODE + 1);
+                    SettingsForm.SelectTargetingMode(Settings.Default.SELECTED_TARGETING_MODE);
+                    Logging.Write(LogLevel.PRIMARY, "Current Targeting Mode: " + TargetingModes[Settings.Default.SELECTED_TARGETING_MODE]);
                 });
                 Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyTargetMode.ToString());
             }
@@ -135,7 +136,7 @@ namespace MudBase
         public static List<String> TargetMobList = Settings.Default.TARGET_MOB_LIST.Split('\n').ToList();
         public GameObject GetClosestEnemyByName(List<String> names) {
             Logging.Write(LogLevel.INFO, "Finding nearest enemy to attack...");
-            return GameObjectManager.GameObjects.Where(u => u.CanAttack).OrderBy(u => u.Distance2D()).Where(u => names.Count == 0 || (names.Count == 1 && names.First().Equals("")) || names.Contains(u.Name)).FirstOrDefault();
+            return GameObjectManager.GameObjects.Where(u => u.CanAttack).OrderBy(u => u.Distance2D()).Where(u => names.Count == 0 || (names.Count == 1 && names.First().Equals("")) || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") && names.Contains(u.Name)) || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist") && !names.Contains(u.Name))).FirstOrDefault();
         }
 
         public PartyMember GetPartyTank()

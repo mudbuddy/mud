@@ -22,7 +22,9 @@ namespace MudBase
             comboBox2.Items.AddRange(MudBase.ModifierKeyStrings);
             comboBox2.SelectedIndex = Properties.Settings.Default.HOTKEY_TARGET_MODE_MODIFIER;
             comboBox3.Items.AddRange(MudBase.TargetingModes);
-            SelectTargetingMode(Properties.Settings.Default.TARGETING_MODE);
+            SelectTargetingMode(Properties.Settings.Default.SELECTED_TARGETING_MODE);
+            comboBox4.Items.AddRange(MudBase.TargetListTypes);
+            comboBox4.SelectedIndex = Properties.Settings.Default.SELECTED_TARGET_LIST_TYPE;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -53,6 +55,16 @@ namespace MudBase
         public static void SelectTargetingMode(int p)
         {
             instance.comboBox3.SelectedIndex = p;
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SELECTED_TARGETING_MODE = ((ComboBox)sender).SelectedIndex;
+        }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SELECTED_TARGET_LIST_TYPE = ((ComboBox)sender).SelectedIndex;
         }
     }
 }
