@@ -190,5 +190,41 @@ namespace MudBase.Properties {
                 this["SELECTED_TARGET_LIST_TYPE"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EXECUTE_WHILE_MOVING {
+            get {
+                return ((bool)(this["EXECUTE_WHILE_MOVING"]));
+            }
+            set {
+                this["EXECUTE_WHILE_MOVING"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
+        public decimal TARGETING_DISTANCE {
+            get {
+                return ((decimal)(this["TARGETING_DISTANCE"]));
+            }
+            set {
+                this["TARGETING_DISTANCE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool TARGET_OUT_OF_LOS {
+            get {
+                return ((bool)(this["TARGET_OUT_OF_LOS"]));
+            }
+            set {
+                this["TARGET_OUT_OF_LOS"] = value;
+            }
+        }
     }
 }

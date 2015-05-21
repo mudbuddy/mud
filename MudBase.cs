@@ -49,7 +49,7 @@ namespace MudBase
             get 
             {
                 return _root ?? (_root =
-                    new Decorator( req => !Settings.Default.IS_PAUSED && !Core.Player.IsCasting && !Core.Player.IsMounted && !MovementManager.IsMoving,
+                    new Decorator( req => !Settings.Default.IS_PAUSED && !Core.Player.IsCasting && !Core.Player.IsMounted && (!MovementManager.IsMoving || Settings.Default.EXECUTE_WHILE_MOVING),
                         new PrioritySelector(
                             new Decorator(r => !Core.Player.InCombat && Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF, RoutineManager.Current.PreCombatBuffBehavior),
                             new Decorator(r => (Core.Player.InCombat || Settings.Default.HEAL_OUT_OF_COMBAT) && Settings.Default.COMBAT_ROUTINE_HEAL, RoutineManager.Current.HealBehavior),
@@ -136,7 +136,7 @@ namespace MudBase
         public static List<String> TargetMobList = Settings.Default.TARGET_MOB_LIST.Split('\n').ToList();
         public GameObject GetClosestEnemyByName(List<String> names) {
             Logging.Write(LogLevel.INFO, "Finding nearest enemy to attack...");
-            return GameObjectManager.GameObjects.Where(u => u.CanAttack).OrderBy(u => u.Distance2D()).Where(u => names.Count == 0 || (names.Count == 1 && names.First().Equals("")) || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") && names.Contains(u.Name)) || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist") && !names.Contains(u.Name))).FirstOrDefault();
+            return GameObjectManager.GameObjects.Where(u => u.CanAttack && (decimal)u.DistanceSqr() <= Settings.Default.TARGETING_DISTANCE).OrderBy(u => u.DistanceSqr()).Where(u => names.Count == 0 || (names.Count == 1 && names.First().Equals("")) || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") && names.Contains(u.Name)) || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist") && !names.Contains(u.Name))).FirstOrDefault();
         }
 
         public PartyMember GetPartyTank()

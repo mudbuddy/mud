@@ -23,6 +23,7 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
+- `1.0.6`: Targeting by Distance. Execute CR while moving.
 - `1.0.5`: Allow list to function as Blacklist or Whitelist
 - `1.0.4`: Fix null pointer on Empty Hotkeys
 - `1.0.3`: Improved Targeting Mode / Hotkeys
