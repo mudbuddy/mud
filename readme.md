@@ -10,11 +10,14 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 
 ## Features
 - Pause/Unpause with Hotkey
-- Initiate Attacks While Out of Combat
-- Heal While Out of Combat
+- Optional Auto Sprint Out of Combat
+- Initiate Attacks While Out of Combat (if Combat Routine Supports)
+- Heal While Out of Combat (if Combat Routine Supports)
+- Move In Range of Target or Tank
+- Optional Facing Target
 - Enable / Disable Specific Parts of the Combat Routine, such as PreCombatBuff/Heal/CombatBuff/Combat
-- Automatic Tank-Assist In Parties
-- Auto Targeting / Target Filtering
+- Optional Tank Assist (Target Tank's Target)
+- Auto Targeting / Target Whitelisting/Blacklisting
 - Persistent Settings
 
 ## Installation
@@ -23,6 +26,9 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
+- `1.1.0`: Add Facing/Movement
+- `1.1.0`: Target List Enhancements
+- `1.1.0`: UI Improvements / Flash Messages
 - `1.0.6`: Targeting by Distance. Execute CR while moving.
 - `1.0.5`: Allow list to function as Blacklist or Whitelist
 - `1.0.4`: Fix null pointer on Empty Hotkeys

@@ -23,35 +23,56 @@
     <Setting Name="COMBAT_ROUTINE_COMBAT" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="TARGET_MOB_LIST" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="TARGET_MOB_LIST" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;Enter Mob Names Here...&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="SELECTED_TARGETING_MODE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="HOTKEY_PAUSE_MODIFIER" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="HOTKEY_PAUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">P</Value>
     </Setting>
     <Setting Name="HOTKEY_TARGET_MODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">T</Value>
     </Setting>
     <Setting Name="HOTKEY_TARGET_MODE_MODIFIER" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="SELECTED_TARGET_LIST_TYPE" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="EXECUTE_WHILE_MOVING" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="TARGETING_DISTANCE" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">20</Value>
+      <Value Profile="(Default)">25</Value>
     </Setting>
-    <Setting Name="TARGET_OUT_OF_LOS" Type="System.Boolean" Scope="User">
+    <Setting Name="AUTO_FACE_TARGET" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MOVE_TO_TARGET" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MOVE_TARGET_RANGE" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="SELECTED_MOVE_TARGET" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="AUTO_SPRINT" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="FLASH_MESSAGES" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ACTIVATE_FFXIV" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
