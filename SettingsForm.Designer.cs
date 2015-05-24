@@ -30,25 +30,13 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.checkBox11 = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.checkBox10 = new System.Windows.Forms.CheckBox();
-            this.checkBox9 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button3 = new System.Windows.Forms.Button();
@@ -58,26 +46,38 @@
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.checkBox13 = new System.Windows.Forms.CheckBox();
-            this.checkBox12 = new System.Windows.Forms.CheckBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.checkBox11 = new System.Windows.Forms.CheckBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox10 = new System.Windows.Forms.CheckBox();
+            this.checkBox9 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox13 = new System.Windows.Forms.CheckBox();
+            this.checkBox12 = new System.Windows.Forms.CheckBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -116,23 +116,8 @@
             this.tabPage1.Text = "Settings";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // checkBox11
-            // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.Checked = global::MudBase.Properties.Settings.Default.AUTO_SPRINT;
-            this.checkBox11.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox11.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "AUTO_SPRINT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox11.Location = new System.Drawing.Point(21, 74);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Size = new System.Drawing.Size(154, 17);
-            this.checkBox11.TabIndex = 18;
-            this.checkBox11.Text = "Auto Sprint (Out Of Combat)";
-            this.checkBox11.UseVisualStyleBackColor = true;
-            // 
             // label11
             // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
             this.label11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label11.Location = new System.Drawing.Point(46, 150);
@@ -153,7 +138,6 @@
             // 
             // label10
             // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
             this.label10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.label10.Location = new System.Drawing.Point(162, 123);
@@ -161,57 +145,6 @@
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 15;
             this.label10.Text = "Yalms";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::MudBase.Properties.Settings.Default, "MOVE_TARGET_RANGE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown2.Location = new System.Drawing.Point(110, 121);
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(46, 20);
-            this.numericUpDown2.TabIndex = 14;
-            this.numericUpDown2.Value = global::MudBase.Properties.Settings.Default.MOVE_TARGET_RANGE;
-            // 
-            // checkBox10
-            // 
-            this.checkBox10.AutoSize = true;
-            this.checkBox10.Checked = global::MudBase.Properties.Settings.Default.MOVE_TO_TARGET;
-            this.checkBox10.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "MOVE_TO_TARGET", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox10.Location = new System.Drawing.Point(20, 121);
-            this.checkBox10.Name = "checkBox10";
-            this.checkBox10.Size = new System.Drawing.Size(83, 17);
-            this.checkBox10.TabIndex = 13;
-            this.checkBox10.Text = "Move Within";
-            this.checkBox10.UseVisualStyleBackColor = true;
-            // 
-            // checkBox9
-            // 
-            this.checkBox9.AutoSize = true;
-            this.checkBox9.Checked = global::MudBase.Properties.Settings.Default.AUTO_FACE_TARGET;
-            this.checkBox9.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "AUTO_FACE_TARGET", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox9.Location = new System.Drawing.Point(20, 97);
-            this.checkBox9.Name = "checkBox9";
-            this.checkBox9.Size = new System.Drawing.Size(106, 17);
-            this.checkBox9.TabIndex = 12;
-            this.checkBox9.Text = "Auto Face Target";
-            this.checkBox9.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Checked = global::MudBase.Properties.Settings.Default.EXECUTE_WHILE_MOVING;
-            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "EXECUTE_WHILE_MOVING", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox4.Location = new System.Drawing.Point(21, 51);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(127, 17);
-            this.checkBox4.TabIndex = 11;
-            this.checkBox4.Text = "Execute while Moving";
-            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -223,19 +156,6 @@
             this.label2.Size = new System.Drawing.Size(88, 13);
             this.label2.TabIndex = 4;
             this.label2.Text = "General Settings:";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = global::MudBase.Properties.Settings.Default.IS_PAUSED;
-            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "IS_PAUSED", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox1.Location = new System.Drawing.Point(21, 28);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(105, 17);
-            this.checkBox1.TabIndex = 0;
-            this.checkBox1.Text = "Pause All Actions";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
@@ -255,62 +175,6 @@
             this.tabPage4.Tag = "IC";
             this.tabPage4.Text = "Routine";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // checkBox8
-            // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_COMBAT;
-            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox8.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_COMBAT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox8.Location = new System.Drawing.Point(24, 165);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(59, 17);
-            this.checkBox8.TabIndex = 18;
-            this.checkBox8.Text = "Combat";
-            this.checkBox8.UseVisualStyleBackColor = true;
-            // 
-            // checkBox7
-            // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_COMBATBUFF;
-            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox7.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_COMBATBUFF", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox7.Location = new System.Drawing.Point(24, 142);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(81, 17);
-            this.checkBox7.TabIndex = 17;
-            this.checkBox7.Text = "Combat Buff";
-            this.checkBox7.UseVisualStyleBackColor = true;
-            // 
-            // checkBox6
-            // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_HEAL;
-            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_HEAL", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox6.Location = new System.Drawing.Point(24, 119);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(45, 17);
-            this.checkBox6.TabIndex = 16;
-            this.checkBox6.Text = "Heal";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            // 
-            // checkBox5
-            // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF;
-            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_PRECOMBATBUFF", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox5.Location = new System.Drawing.Point(24, 96);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(100, 17);
-            this.checkBox5.TabIndex = 15;
-            this.checkBox5.Text = "Pre-Combat Buff";
-            this.checkBox5.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -334,32 +198,6 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "Out of Combat Actions:";
             // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Checked = global::MudBase.Properties.Settings.Default.ATTACK_OUT_OF_COMBAT;
-            this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "ATTACK_OUT_OF_COMBAT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox2.Location = new System.Drawing.Point(24, 52);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(144, 17);
-            this.checkBox2.TabIndex = 11;
-            this.checkBox2.Text = "Attack Outside of Combat";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Checked = global::MudBase.Properties.Settings.Default.HEAL_OUT_OF_COMBAT;
-            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "HEAL_OUT_OF_COMBAT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox3.Location = new System.Drawing.Point(24, 29);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(135, 17);
-            this.checkBox3.TabIndex = 12;
-            this.checkBox3.Text = "Heal Outside of Combat";
-            this.checkBox3.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.dataGridView1);
@@ -381,8 +219,7 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(3, 102);
@@ -395,6 +232,7 @@
             // 
             // button3
             // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Location = new System.Drawing.Point(83, 234);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(119, 23);
@@ -469,17 +307,6 @@
             this.label1.TabIndex = 5;
             this.label1.Text = "Mobs Named:";
             // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::MudBase.Properties.Settings.Default, "TARGETING_DISTANCE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.numericUpDown1.Location = new System.Drawing.Point(83, 35);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(78, 20);
-            this.numericUpDown1.TabIndex = 13;
-            this.numericUpDown1.Value = global::MudBase.Properties.Settings.Default.TARGETING_DISTANCE;
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.checkBox13);
@@ -498,45 +325,6 @@
             this.tabPage3.Tag = "IC";
             this.tabPage3.Text = "Hotkeys";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // checkBox13
-            // 
-            this.checkBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBox13.AutoSize = true;
-            this.checkBox13.Checked = global::MudBase.Properties.Settings.Default.ACTIVATE_FFXIV;
-            this.checkBox13.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox13.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "ACTIVATE_FFXIV", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox13.Location = new System.Drawing.Point(18, 237);
-            this.checkBox13.Name = "checkBox13";
-            this.checkBox13.Size = new System.Drawing.Size(163, 17);
-            this.checkBox13.TabIndex = 7;
-            this.checkBox13.Text = "Reactivate FFXIV After Flash";
-            this.checkBox13.UseVisualStyleBackColor = true;
-            // 
-            // checkBox12
-            // 
-            this.checkBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.checkBox12.AutoSize = true;
-            this.checkBox12.Checked = global::MudBase.Properties.Settings.Default.FLASH_MESSAGES;
-            this.checkBox12.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox12.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "FLASH_MESSAGES", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox12.Location = new System.Drawing.Point(3, 214);
-            this.checkBox12.Name = "checkBox12";
-            this.checkBox12.Size = new System.Drawing.Size(193, 17);
-            this.checkBox12.TabIndex = 6;
-            this.checkBox12.Text = "Flash Hotkey Messages On Screen";
-            this.checkBox12.UseVisualStyleBackColor = true;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MudBase.Properties.Settings.Default, "HOTKEY_TARGET_MODE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox3.Location = new System.Drawing.Point(104, 69);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(98, 20);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.Text = global::MudBase.Properties.Settings.Default.HOTKEY_TARGET_MODE;
             // 
             // comboBox2
             // 
@@ -580,17 +368,6 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "Pause / Unpause Mud Assist";
             // 
-            // textBox2
-            // 
-            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MudBase.Properties.Settings.Default, "HOTKEY_PAUSE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox2.Location = new System.Drawing.Point(104, 29);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(98, 20);
-            this.textBox2.TabIndex = 2;
-            this.textBox2.Text = global::MudBase.Properties.Settings.Default.HOTKEY_PAUSE;
-            // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -615,6 +392,226 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // checkBox11
+            // 
+            this.checkBox11.AutoSize = true;
+            this.checkBox11.Checked = global::MudBase.Properties.Settings.Default.AUTO_SPRINT;
+            this.checkBox11.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox11.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "AUTO_SPRINT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox11.Location = new System.Drawing.Point(21, 74);
+            this.checkBox11.Name = "checkBox11";
+            this.checkBox11.Size = new System.Drawing.Size(154, 17);
+            this.checkBox11.TabIndex = 18;
+            this.checkBox11.Text = "Auto Sprint (Out Of Combat)";
+            this.checkBox11.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown2.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::MudBase.Properties.Settings.Default, "MOVE_TARGET_RANGE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown2.Location = new System.Drawing.Point(110, 121);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(46, 20);
+            this.numericUpDown2.TabIndex = 14;
+            this.numericUpDown2.Value = global::MudBase.Properties.Settings.Default.MOVE_TARGET_RANGE;
+            // 
+            // checkBox10
+            // 
+            this.checkBox10.AutoSize = true;
+            this.checkBox10.Checked = global::MudBase.Properties.Settings.Default.MOVE_TO_TARGET;
+            this.checkBox10.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "MOVE_TO_TARGET", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox10.Location = new System.Drawing.Point(20, 121);
+            this.checkBox10.Name = "checkBox10";
+            this.checkBox10.Size = new System.Drawing.Size(83, 17);
+            this.checkBox10.TabIndex = 13;
+            this.checkBox10.Text = "Move Within";
+            this.checkBox10.UseVisualStyleBackColor = true;
+            // 
+            // checkBox9
+            // 
+            this.checkBox9.AutoSize = true;
+            this.checkBox9.Checked = global::MudBase.Properties.Settings.Default.AUTO_FACE_TARGET;
+            this.checkBox9.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "AUTO_FACE_TARGET", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox9.Location = new System.Drawing.Point(20, 97);
+            this.checkBox9.Name = "checkBox9";
+            this.checkBox9.Size = new System.Drawing.Size(106, 17);
+            this.checkBox9.TabIndex = 12;
+            this.checkBox9.Text = "Auto Face Target";
+            this.checkBox9.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Checked = global::MudBase.Properties.Settings.Default.EXECUTE_WHILE_MOVING;
+            this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox4.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "EXECUTE_WHILE_MOVING", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox4.Location = new System.Drawing.Point(21, 51);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(127, 17);
+            this.checkBox4.TabIndex = 11;
+            this.checkBox4.Text = "Execute while Moving";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = global::MudBase.Properties.Settings.Default.IS_PAUSED;
+            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "IS_PAUSED", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox1.Location = new System.Drawing.Point(21, 28);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(105, 17);
+            this.checkBox1.TabIndex = 0;
+            this.checkBox1.Text = "Pause All Actions";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox8
+            // 
+            this.checkBox8.AutoSize = true;
+            this.checkBox8.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_COMBAT;
+            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox8.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_COMBAT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox8.Location = new System.Drawing.Point(24, 165);
+            this.checkBox8.Name = "checkBox8";
+            this.checkBox8.Size = new System.Drawing.Size(59, 17);
+            this.checkBox8.TabIndex = 18;
+            this.checkBox8.Text = "Combat";
+            this.checkBox8.UseVisualStyleBackColor = true;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.AutoSize = true;
+            this.checkBox7.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_COMBATBUFF;
+            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox7.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_COMBATBUFF", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox7.Location = new System.Drawing.Point(24, 142);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(81, 17);
+            this.checkBox7.TabIndex = 17;
+            this.checkBox7.Text = "Combat Buff";
+            this.checkBox7.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_HEAL;
+            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox6.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_HEAL", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox6.Location = new System.Drawing.Point(24, 119);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(45, 17);
+            this.checkBox6.TabIndex = 16;
+            this.checkBox6.Text = "Heal";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Checked = global::MudBase.Properties.Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF;
+            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox5.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "COMBAT_ROUTINE_PRECOMBATBUFF", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox5.Location = new System.Drawing.Point(24, 96);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(100, 17);
+            this.checkBox5.TabIndex = 15;
+            this.checkBox5.Text = "Pre-Combat Buff";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Checked = global::MudBase.Properties.Settings.Default.ATTACK_OUT_OF_COMBAT;
+            this.checkBox2.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "ATTACK_OUT_OF_COMBAT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox2.Location = new System.Drawing.Point(24, 52);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(144, 17);
+            this.checkBox2.TabIndex = 11;
+            this.checkBox2.Text = "Attack Outside of Combat";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Checked = global::MudBase.Properties.Settings.Default.HEAL_OUT_OF_COMBAT;
+            this.checkBox3.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "HEAL_OUT_OF_COMBAT", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBox3.Location = new System.Drawing.Point(24, 29);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(135, 17);
+            this.checkBox3.TabIndex = 12;
+            this.checkBox3.Text = "Heal Outside of Combat";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericUpDown1.DataBindings.Add(new System.Windows.Forms.Binding("Value", global::MudBase.Properties.Settings.Default, "TARGETING_DISTANCE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.numericUpDown1.Location = new System.Drawing.Point(83, 35);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(78, 20);
+            this.numericUpDown1.TabIndex = 13;
+            this.numericUpDown1.Value = global::MudBase.Properties.Settings.Default.TARGETING_DISTANCE;
+            // 
+            // checkBox13
+            // 
+            this.checkBox13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox13.AutoSize = true;
+            this.checkBox13.Checked = global::MudBase.Properties.Settings.Default.ACTIVATE_FFXIV;
+            this.checkBox13.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox13.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "ACTIVATE_FFXIV", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox13.Location = new System.Drawing.Point(18, 237);
+            this.checkBox13.Name = "checkBox13";
+            this.checkBox13.Size = new System.Drawing.Size(163, 17);
+            this.checkBox13.TabIndex = 7;
+            this.checkBox13.Text = "Reactivate FFXIV After Flash";
+            this.checkBox13.UseVisualStyleBackColor = true;
+            // 
+            // checkBox12
+            // 
+            this.checkBox12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBox12.AutoSize = true;
+            this.checkBox12.Checked = global::MudBase.Properties.Settings.Default.FLASH_MESSAGES;
+            this.checkBox12.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox12.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::MudBase.Properties.Settings.Default, "FLASH_MESSAGES", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox12.Location = new System.Drawing.Point(3, 214);
+            this.checkBox12.Name = "checkBox12";
+            this.checkBox12.Size = new System.Drawing.Size(193, 17);
+            this.checkBox12.TabIndex = 6;
+            this.checkBox12.Text = "Flash Hotkey Messages On Screen";
+            this.checkBox12.UseVisualStyleBackColor = true;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MudBase.Properties.Settings.Default, "HOTKEY_TARGET_MODE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBox3.Location = new System.Drawing.Point(104, 69);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(98, 20);
+            this.textBox3.TabIndex = 5;
+            this.textBox3.Text = global::MudBase.Properties.Settings.Default.HOTKEY_TARGET_MODE;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::MudBase.Properties.Settings.Default, "HOTKEY_PAUSE", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBox2.Location = new System.Drawing.Point(104, 29);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(98, 20);
+            this.textBox2.TabIndex = 2;
+            this.textBox2.Text = global::MudBase.Properties.Settings.Default.HOTKEY_PAUSE;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -630,15 +627,15 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }

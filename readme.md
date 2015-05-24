@@ -43,4 +43,3 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 ## Planned Updates
 - (Feature) Button in UI for Removing Selected Target (Can already remove by pressing "Delete" key)
 - (Feature) Hotkeys for removing/adding targets to Target List
-- (Bugfix) Fix Anchors for UI Resizing
