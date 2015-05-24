@@ -39,3 +39,8 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 - `1.0.2`: Null check on GetPartyTank to prevent Log spam when Tank not in group
 - `1.0.1`: Fix for CR toggle
 - `1.0.0`: Release
+
+## Planned Updates
+- (Feature) Button in UI for Removing Selected Target (Can already remove by pressing "Delete" key)
+- (Feature) Hotkeys for removing/adding targets to Target List
+- (Bugfix) Fix Anchors for UI Resizing
