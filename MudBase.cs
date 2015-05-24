@@ -117,14 +117,15 @@ namespace MudBase
                                     new TreeSharp.Action(a => { Navigator.PlayerMover.MoveTowards(GetMoveTarget().Location); })),
                                 // Face Target If Facing Enabled
                                 new Decorator(
-                                    req => Settings.Default.AUTO_FACE_TARGET && Core.Player.HasTarget && !Core.Player.CurrentTarget.IsMe && !Core.Player.IsFacing(Core.Player.CurrentTarget),
+                                    req => Settings.Default.AUTO_FACE_TARGET 
+                                        && IsValidEnemy(Core.Player.CurrentTarget) 
+                                        && !Core.Player.IsFacing(Core.Player.CurrentTarget),
                                     new TreeSharp.Action(a => {
                                         Core.Player.CurrentTarget.Face(); })),
                                 // Combat Routine
                                 new Decorator(
                                     req => Settings.Default.COMBAT_ROUTINE_COMBAT
-                                        && Core.Player.HasTarget
-                                        && !Core.Player.CurrentTarget.IsMe
+                                        && IsValidEnemy(Core.Player.CurrentTarget)
                                         && (Settings.Default.TARGET_MOB_LIST.Count == 0
                                             || Settings.Default.TARGET_MOB_LIST[0].Length == 0 
                                             || ((TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
@@ -252,6 +253,16 @@ namespace MudBase
             else if (Core.Player.HasTarget && Core.Player.CurrentTarget is Character && MudBase.MoveTarget[Settings.Default.SELECTED_MOVE_TARGET].Equals("Target"))
                 targ = (Character)Core.Player.CurrentTarget;
             return targ;
+        }
+
+        public bool IsValidEnemy(GameObject obj)
+        {
+            if (obj == null)
+                return false;
+            if (!(obj is Character))
+                return false;
+            Character c = (Character)obj;
+            return !c.IsMe && !c.IsDead && c.IsValid && c.IsTargetable && c.IsVisible && c.CanAttack;
         }
     }
 }

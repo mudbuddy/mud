@@ -1,4 +1,4 @@
-# Mud Assist 1.1.0
+# Mud Assist 1.1.1
 Mud Assist is Botbase for [Rebornbuddy](http://rebornbuddy.com) that gives full control over your CR.
 It's similar to the Combat Assist Botbase, but gives much more control over the CR.
 
@@ -29,6 +29,7 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
+- `1.1.1`: Minor bug fixes
 - `1.1.0`: Add Facing/Movement
 - `1.1.0`: Target List Enhancements
 - `1.1.0`: UI Improvements / Flash Messages
