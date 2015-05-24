@@ -199,16 +199,9 @@ namespace MudBase
         public GameObject GetClosestEnemyByName(StringCollection names) {
             Logging.Write(LogLevel.INFO, "Finding nearest enemy to attack...");
             return GameObjectManager.GameObjects.Where(u => 
-                u.CanAttack && 
-                (decimal) Core.Player.Location.Distance3D(u.Location) <= Settings.Default.TARGETING_DISTANCE).OrderBy(u => u.DistanceSqr()).Where(
-                    u => names.Count == 0 
-                        || (names.Count == 1 
-                            && (names[0].Equals("") 
-                                || names[0].Equals("Enter Mob Names Here...")) 
-                        || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") 
-                            && names.Contains(u.Name)) 
-                        || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist") 
-                            && !names.Contains(u.Name)))).FirstOrDefault();
+                    IsValidEnemy(u)
+                    && (decimal) Core.Player.Location.Distance3D(u.Location) <= Settings.Default.TARGETING_DISTANCE)
+                .OrderBy(u => Core.Player.Location.Distance3D(u.Location)).FirstOrDefault();
         }
 
         public List<Character> VisiblePartyMembers { get {
@@ -250,7 +243,7 @@ namespace MudBase
             IEnumerable<Character> tanks = VisiblePartyMembers.Where(p => IsTank(p));
             if (tanks.Count() > 0 && MudBase.MoveTarget[Settings.Default.SELECTED_MOVE_TARGET].Equals("Tank"))
                 targ = tanks.First();
-            else if (Core.Player.HasTarget && Core.Player.CurrentTarget is Character && MudBase.MoveTarget[Settings.Default.SELECTED_MOVE_TARGET].Equals("Target"))
+            else if (IsValidEnemy(Core.Player.CurrentTarget) && MudBase.MoveTarget[Settings.Default.SELECTED_MOVE_TARGET].Equals("Target"))
                 targ = (Character)Core.Player.CurrentTarget;
             return targ;
         }
@@ -262,7 +255,11 @@ namespace MudBase
             if (!(obj is Character))
                 return false;
             Character c = (Character)obj;
-            return !c.IsMe && !c.IsDead && c.IsValid && c.IsTargetable && c.IsVisible && c.CanAttack;
+            return !c.IsMe && !c.IsDead && c.IsValid && c.IsTargetable && c.IsVisible && c.CanAttack 
+                && ((TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") 
+                        && Settings.Default.TARGET_MOB_LIST.Contains(c.Name))
+                    || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
+                        && !Settings.Default.TARGET_MOB_LIST.Contains(c.Name)));
         }
     }
 }
