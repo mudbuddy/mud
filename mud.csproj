@@ -50,7 +50,7 @@
     <Compile Include="Helpers\FlashMessage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Helpers\FlashMessage.Settings.cs">
+    <Compile Include="Helpers\FlashMessage.Designer.cs">
       <DependentUpon>FlashMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\StringValue.cs" />

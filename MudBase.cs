@@ -1,5 +1,6 @@
 ﻿using ff14bot;
 using ff14bot.AClasses;
+using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -9,7 +10,9 @@ using MudBase.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Input;
 using TreeSharp;
@@ -27,6 +30,7 @@ namespace MudBase
         public override bool WantButton { get { return true; } }
         public override bool RequiresProfile { get { return false; } }
         public override ff14bot.Behavior.PulseFlags PulseFlags { get { return ff14bot.Behavior.PulseFlags.All; } }
+        public static String LastTargetName = null;
 
         public override void OnButtonPress()
         {
@@ -35,56 +39,73 @@ namespace MudBase
             settings.ShowDialog();
         }
 
-        public override void Start()
+        public override void Initialize()
         {
+            Logging.Write(LogLevel.PRIMARY, "Initializing");
             Navigator.PlayerMover = new SlideMover();
             Navigator.NavigationProvider = new GaiaNavigator();
             ResetHotkeys();
-            Logging.Write(LogLevel.PRIMARY, "Started!");
+        }
+
+        public override void Start()
+        {
+            Logging.Write(LogLevel.PRIMARY, "Started");
         }
 
         public override void Stop()
         {
-            UnregisterHotkey(_hotkeyPause);
-            UnregisterHotkey(_hotkeyTargetMode);
             _root = null;
             Navigator.PlayerMover = new NullMover();
             Navigator.NavigationProvider = new NullProvider();
             Logging.Write(LogLevel.PRIMARY, "Stopped!");
         }
 
+        public bool TreeTick()
+        {
+            if(Core.Player.CurrentTarget != null && Core.Player.CurrentTarget.Name != null)
+                LastTargetName = Core.Player.CurrentTarget.Name;
+            return true;
+        }
+
         private Composite _root;
         public override Composite Root { get {
             return _root ?? (_root =
                 new Decorator( 
-                    req => !Settings.Default.IS_PAUSED 
+                    req => TreeTick()
+                        && !Settings.Default.COMBAT_ROUTINE_PAUSED 
                         && !Core.Player.IsCasting 
-                        && !Core.Player.IsMounted 
                         && (!MovementManager.IsMoving 
-                            || Settings.Default.EXECUTE_WHILE_MOVING),
+                            || Settings.Default.COMBAT_ROUTINE_EXECUTE_WHILE_MOVING),
                     new PrioritySelector(
                         // Auto-Sprint
                         new Decorator(
-                            req => Settings.Default.AUTO_SPRINT && !Core.Player.InCombat && Actionmanager.IsSprintReady && MovementManager.IsMoving,
+                            req => Settings.Default.AUTO_SPRINT 
+                                && !Core.Player.InCombat 
+                                && Actionmanager.IsSprintReady 
+                                && MovementManager.IsMoving
+                                && !Core.Player.IsMounted,
                             new TreeSharp.Action(a => {Actionmanager.Sprint();})),
                         // Pre-Combat Buffs
                         new Decorator(
                             req => !Core.Player.InCombat && 
-                                Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF, 
+                                Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF
+                                && !Core.Player.IsMounted, 
                             RoutineManager.Current.PreCombatBuffBehavior),
                         // Out Of Combat Healing
                         new Decorator(
                             req => (Core.Player.InCombat 
-                                    || Settings.Default.HEAL_OUT_OF_COMBAT) 
-                                && Settings.Default.COMBAT_ROUTINE_HEAL, 
+                                    || Settings.Default.COMBAT_ROUTINE_HEAL_OUT_OF_COMBAT) 
+                                && Settings.Default.COMBAT_ROUTINE_HEAL
+                                && !Core.Player.IsMounted, 
                             RoutineManager.Current.HealBehavior),
                         new Decorator(
                             req => (Core.Player.InCombat 
-                                || Settings.Default.ATTACK_OUT_OF_COMBAT),
+                                || Settings.Default.COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT),
                             new PrioritySelector (
                                 // Combat Buffs
                                 new Decorator(
-                                    req => Settings.Default.COMBAT_ROUTINE_COMBATBUFF,
+                                    req => Settings.Default.COMBAT_ROUTINE_COMBATBUFF
+                                         && !Core.Player.IsMounted,
                                     RoutineManager.Current.CombatBuffBehavior),
                                 // Find Suitable Target
                                 new Decorator(
@@ -98,84 +119,92 @@ namespace MudBase
                                     req => TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Nearest Enemy") 
                                         && !Core.Player.HasTarget,
                                     new TreeSharp.Action(a => {
-                                        GameObject target = GetClosestEnemyByName(Settings.Default.TARGET_MOB_LIST);
+                                        GameObject target = GetClosestEnemyByName(Settings.Default.MOBS_TO_TARGET);
                                         if (target != null)
                                             target.Target();})),
                                 // Stop Moving If Moving & In Range Of Target
                                 new Decorator(
-                                    req => Settings.Default.MOVE_TO_TARGET
+                                    req => Settings.Default.AUTO_MOVE_TO_TARGET
                                         && MovementManager.IsMoving
                                         && GetMoveTarget() != Core.Player
-                                        && Core.Player.Location.Distance3D(GetMoveTarget().Location) <= ((float)Settings.Default.MOVE_TARGET_RANGE),
+                                        && Core.Player.Location.Distance3D(GetMoveTarget().Location) <= ((float)Settings.Default.AUTO_MOVE_TARGET_RANGE),
                                     new TreeSharp.Action(a => { Navigator.PlayerMover.MoveStop(); })),
                                 // Move To Target If Not In Range & Not On The Move
                                 new Decorator(
-                                    req => Settings.Default.MOVE_TO_TARGET
+                                    req => Settings.Default.AUTO_MOVE_TO_TARGET
                                         && !MovementManager.IsMoving
                                         && GetMoveTarget() != Core.Player
-                                        && Core.Player.Location.Distance3D(GetMoveTarget().Location) > ((float)Settings.Default.MOVE_TARGET_RANGE * 1.10),
+                                        && Core.Player.Location.Distance3D(GetMoveTarget().Location) > ((float)Settings.Default.AUTO_MOVE_TARGET_RANGE * 1.10),
                                     new TreeSharp.Action(a => { Navigator.PlayerMover.MoveTowards(GetMoveTarget().Location); })),
-                                // Face Target If Facing Enabled
-                                new Decorator(
-                                    req => Settings.Default.AUTO_FACE_TARGET 
-                                        && IsValidEnemy(Core.Player.CurrentTarget) 
-                                        && !Core.Player.IsFacing(Core.Player.CurrentTarget),
-                                    new TreeSharp.Action(a => {
-                                        Core.Player.CurrentTarget.Face(); })),
+                                //// Face Target If Facing Enabled
+                                //new Decorator(
+                                //    req => Settings.Default.AUTO_FACE_TARGET 
+                                //        && IsValidEnemy(Core.Player.CurrentTarget) 
+                                //        && !Core.Player.IsFacing(Core.Player.CurrentTarget),
+                                //    new TreeSharp.Action(a => {
+                                //        Core.Player.CurrentTarget.Face(); })),
                                 // Combat Routine
                                 new Decorator(
                                     req => Settings.Default.COMBAT_ROUTINE_COMBAT
+                                        && !Core.Player.IsMounted
                                         && IsValidEnemy(Core.Player.CurrentTarget)
-                                        && (Settings.Default.TARGET_MOB_LIST.Count == 0
-                                            || Settings.Default.TARGET_MOB_LIST[0].Length == 0 
+                                        && (Settings.Default.MOBS_TO_TARGET.Count == 0
+                                            || Settings.Default.MOBS_TO_TARGET[0].Length == 0 
                                             || ((TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
-                                                    && !Settings.Default.TARGET_MOB_LIST.Contains(Core.Player.CurrentTarget.Name)) 
+                                                    && !Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name)) 
                                                 || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist")
-                                                    && Settings.Default.TARGET_MOB_LIST.Contains(Core.Player.CurrentTarget.Name)))),
+                                                    && Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name)))),
                                     RoutineManager.Current.CombatBehavior))))));}
         }
 
         private static Hotkey _hotkeyPause;
         private static Hotkey _hotkeyTargetMode;
+        private static Hotkey _hotkeyToggleMovement;
+        private static Hotkey _hotkeyAddTargetTargetList;
+        private static Hotkey _hotkeyAddRemTargetTargetList;
         public static void ResetHotkeys()
         {
             UnregisterHotkey(_hotkeyPause);
             UnregisterHotkey(_hotkeyTargetMode);
+            UnregisterHotkey(_hotkeyToggleMovement);
+            UnregisterHotkey(_hotkeyAddTargetTargetList);
+            UnregisterHotkey(_hotkeyAddRemTargetTargetList);
             
             // Hotkey To Pause / Unpause
-            Logging.Write(LogLevel.INFO, "Setting Up Hotkeys");
             Keys key;
-            try {key = (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_PAUSE.ToUpper());}
+            CultureInfo cinfo = Thread.CurrentThread.CurrentCulture;
+            TextInfo text = cinfo.TextInfo;
+            try {key = (Keys)(new KeysConverter()).ConvertFromString(text.ToTitleCase(Settings.Default.HOTKEY_PAUSE));}
                 catch (Exception e) {key = Keys.None;}
             if (key != Keys.None) {
                 _hotkeyPause = HotkeyManager.Register(
                     "HK_MUD_PAUSE", 
                     key, 
                     (ModifierKeys)Enum.Parse(typeof(ModifierKeys), 
-                    ModifierKeyStrings[Settings.Default.HOTKEY_PAUSE_MODIFIER]), 
-                    action => {
-                        Settings.Default.IS_PAUSED = !Settings.Default.IS_PAUSED;
-                        if (Settings.Default.IS_PAUSED) {
+                    ModifierKeyStrings[Settings.Default.HOTKEY_MODIFIER_PAUSE]), 
+                    hkPause => {
+                        Settings.Default.COMBAT_ROUTINE_PAUSED = !Settings.Default.COMBAT_ROUTINE_PAUSED;
+                        if (Settings.Default.COMBAT_ROUTINE_PAUSED) {
                             Logging.Write(LogLevel.PRIMARY, "Paused");
-                            if (Settings.Default.FLASH_MESSAGES)
+                            if (Settings.Default.UI_FLASH_MESSAGES)
                                 FlashMessage.Flash(LogLevel.DANGER, "Paused"); 
                         } else {
                             Logging.Write(LogLevel.PRIMARY, "Unpaused");
-                            if(Settings.Default.FLASH_MESSAGES)
+                            if(Settings.Default.UI_FLASH_MESSAGES)
                                 FlashMessage.Flash(LogLevel.SUCCESS, "Unpaused"); 
                         }});
                 Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyPause.ToString()); }
 
             // Hotkey To Change Targeting Mode
-            try { key = (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_TARGET_MODE.ToUpper()); }
+            try { key = (Keys)(new KeysConverter()).ConvertFromString(text.ToTitleCase(Settings.Default.HOTKEY_TARGET_MODE)); }
                 catch (Exception e) { key = Keys.None; }
             if (key != Keys.None) {
                 _hotkeyTargetMode = HotkeyManager.Register(
                     "HK_MUD_TARGET", 
-                    (Keys)(new KeysConverter()).ConvertFromString(Settings.Default.HOTKEY_TARGET_MODE.ToUpper()), 
+                    key, 
                     (ModifierKeys)Enum.Parse(typeof(ModifierKeys), 
-                    ModifierKeyStrings[Settings.Default.HOTKEY_TARGET_MODE_MODIFIER]), 
-                    action => {
+                    ModifierKeyStrings[Settings.Default.HOTKEY_MODIFIER_TARGET_MODE]), 
+                    hkTargetMode => {
                         //Logging.Write(LogLevel.PRIMARY, "Previous Targeting Mode: " + TargetingModes[Settings.Default.SELECTED_TARGETING_MODE]);
                         if ((Settings.Default.SELECTED_TARGETING_MODE+1) == TargetingModes.Length)
                             Settings.Default.SELECTED_TARGETING_MODE = 0;
@@ -183,28 +212,90 @@ namespace MudBase
                             Settings.Default.SELECTED_TARGETING_MODE = (Settings.Default.SELECTED_TARGETING_MODE + 1);
                         SettingsForm.SelectTargetingMode(Settings.Default.SELECTED_TARGETING_MODE);
                         Logging.Write(LogLevel.PRIMARY, "Target Mode: " + TargetingModes[Settings.Default.SELECTED_TARGETING_MODE]);
-                        if (Settings.Default.FLASH_MESSAGES)
+                        if (Settings.Default.UI_FLASH_MESSAGES)
                             FlashMessage.Flash(LogLevel.WARNING, "Target: " + TargetingModes[Settings.Default.SELECTED_TARGETING_MODE]); 
                         });
-                Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyTargetMode.ToString()); }
+                Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyTargetMode.ToString());
+            }
+
+            // Hotkey To Toggle Movement
+            try { key = (Keys)(new KeysConverter()).ConvertFromString(text.ToTitleCase(Settings.Default.HOTKEY_TOGGLE_MOVEMENT)); }
+            catch (Exception e) { key = Keys.None; }
+            if (key != Keys.None)
+            {
+                _hotkeyToggleMovement = HotkeyManager.Register(
+                    "HK_MUD_TOGGLE_MOVEMENT",
+                    key,
+                    (ModifierKeys)Enum.Parse(typeof(ModifierKeys),
+                    ModifierKeyStrings[Settings.Default.HOTKEY_MODIFIER_TOGGLE_MOVEMENT]),
+                    hkToggleMovement =>
+                    {
+                        Settings.Default.AUTO_MOVE_TO_TARGET = !Settings.Default.AUTO_MOVE_TO_TARGET;
+                        if (Settings.Default.AUTO_MOVE_TO_TARGET)
+                        {
+                            Logging.Write(LogLevel.PRIMARY, "Movement ON");
+                            if (Settings.Default.UI_FLASH_MESSAGES)
+                                FlashMessage.Flash(LogLevel.PRIMARY, "Movement ON");
+                        }
+                        else
+                        {
+                            Logging.Write(LogLevel.DANGER, "Movement OFF");
+                            if (Settings.Default.UI_FLASH_MESSAGES)
+                                FlashMessage.Flash(LogLevel.WARNING, "Movement OFF");
+                        }
+                    });
+                Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyToggleMovement.ToString());
+            }
+
+            // Hotkey To Add/Remove Target From Target List
+            try { key = (Keys)(new KeysConverter()).ConvertFromString(text.ToTitleCase(Settings.Default.HOTKEY_ADD_REM_TARGET_LIST)); }
+            catch (Exception e) { key = Keys.None; }
+            if (key != Keys.None)
+            {
+                _hotkeyAddRemTargetTargetList = HotkeyManager.Register(
+                    "HK_MUD_ADD_REM_TARGET",
+                    key,
+                    (ModifierKeys)Enum.Parse(typeof(ModifierKeys),
+                        ModifierKeyStrings[Settings.Default.HOTKEY_MODIFIER_REM_TARGET_LIST]),
+                    hkAddRemTargetTargetList =>
+                    {
+                        if (MudBase.LastTargetName == null) {
+                            if (Settings.Default.UI_FLASH_MESSAGES)
+                                FlashMessage.Flash(LogLevel.WARNING, "No Valid Last Target", FlashMessage.MessageSize.LARGE); 
+                        } else if(Settings.Default.MOBS_TO_TARGET.Contains(MudBase.LastTargetName)) {
+                            Settings.Default.MOBS_TO_TARGET.Remove(MudBase.LastTargetName);
+                            SettingsForm.UpdateTargetDataGrid();
+                            //SettingsForm.UpdateTargetDataGrid();
+                            Logging.Write(LogLevel.INFO, "Removing {0} From Target List", MudBase.LastTargetName);
+                            if (Settings.Default.UI_FLASH_MESSAGES)
+                                FlashMessage.Flash(LogLevel.PRIMARY, "Removing Target: " + MudBase.LastTargetName,FlashMessage.MessageSize.LARGE); 
+                        } else {
+                            Settings.Default.MOBS_TO_TARGET.Add(MudBase.LastTargetName);
+                            SettingsForm.UpdateTargetDataGrid();
+                            Logging.Write(LogLevel.INFO, "Adding {0} To Target List", MudBase.LastTargetName);
+                            if (Settings.Default.UI_FLASH_MESSAGES)
+                                FlashMessage.Flash(LogLevel.WARNING, "Adding Target: " + MudBase.LastTargetName,FlashMessage.MessageSize.LARGE); }
+                    });
+                Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyAddRemTargetTargetList.ToString());
+            }
         }
 
         public static void UnregisterHotkey(Hotkey hk)
         {
             if (hk != null) {
-                Logging.Write(LogLevel.INFO, "Unregistering Hotkey: " + hk.ToString());
-                HotkeyManager.Unregister(hk); }
+                HotkeyManager.Unregister(hk);
+                Logging.Write(LogLevel.WARNING, "Unregistered Hotkey: " + hk.ToString()); }
         }
 
         public GameObject GetClosestEnemyByName(StringCollection names) {
-            Logging.Write(LogLevel.INFO, "Finding nearest enemy to attack...");
+            //Logging.Write(LogLevel.INFO, "Finding nearest enemy to attack...");
             return GameObjectManager.GameObjects.Where(u => 
                     IsValidEnemy(u)
-                    && (decimal) Core.Player.Location.Distance3D(u.Location) <= Settings.Default.TARGETING_DISTANCE)
+                    && (decimal) Core.Player.Location.Distance3D(u.Location) <= Settings.Default.MAX_TARGET_DISTANCE)
                 .OrderBy(u => Core.Player.Location.Distance3D(u.Location)).FirstOrDefault();
         }
 
-        public List<Character> VisiblePartyMembers { get {
+        public static List<Character> VisiblePartyMembers { get {
             List<Character> members = new List<Character>();
             if (!PartyManager.IsInParty)
                 members.Add(Core.Player);
@@ -215,7 +306,7 @@ namespace MudBase
             return members;
         } }
 
-        public bool IsTank(Character c)
+        public static bool IsTank(Character c)
         {
             switch (c.CurrentJob)
             {
@@ -229,7 +320,7 @@ namespace MudBase
             }
         }
 
-        public void Assist(Character c)
+        public static void Assist(Character c)
         {
             GameObject target = GameObjectManager.GetObjectByObjectId(c.CurrentTargetId);
             if (target != null && target.IsTargetable && target.IsValid && target.CanAttack) {
@@ -237,7 +328,7 @@ namespace MudBase
                 target.Target(); }
         }
 
-        public Character GetMoveTarget()
+        public static Character GetMoveTarget()
         {
             Character targ = Core.Player;
             IEnumerable<Character> tanks = VisiblePartyMembers.Where(p => IsTank(p));
@@ -248,7 +339,7 @@ namespace MudBase
             return targ;
         }
 
-        public bool IsValidEnemy(GameObject obj)
+        public static bool IsValidEnemy(GameObject obj)
         {
             if (obj == null)
                 return false;
@@ -257,9 +348,9 @@ namespace MudBase
             Character c = (Character)obj;
             return !c.IsMe && !c.IsDead && c.IsValid && c.IsTargetable && c.IsVisible && c.CanAttack 
                 && ((TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") 
-                        && Settings.Default.TARGET_MOB_LIST.Contains(c.Name))
+                        && Settings.Default.MOBS_TO_TARGET.Contains(c.Name))
                     || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
-                        && !Settings.Default.TARGET_MOB_LIST.Contains(c.Name)));
+                        && !Settings.Default.MOBS_TO_TARGET.Contains(c.Name)));
         }
     }
 }

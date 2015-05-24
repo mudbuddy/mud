@@ -11,25 +11,20 @@ namespace MudBase.Helpers
         public static LogLevel WARNING = new LogLevel(Color.FromRgb(0xff,0xbb,0x33), Color.FromRgb(0xff,0x88,0x00));
         public static LogLevel DANGER  = new LogLevel(Color.FromRgb(0xff,0x44,0x44), Color.FromRgb(0xcc,0x00,0x00));
 
-        public Color light { get; private set; }
-        public Color dark  { get; private set; }
+        public Color Light { get; private set; }
+        public Color Dark  { get; private set; }
 
         public LogLevel(Color light, Color dark) {
-            this.light = light;
-            this.dark  = dark;
+            this.Light = light;
+            this.Dark  = dark;
         } 
     }
 
     public class Logging
     {
-        public static void Write(LogLevel level, String message)
-        {
-            ff14bot.Helpers.Logging.Write(level.dark, "[MUD] " + message);
-        }
-
         public static void Write(LogLevel level, String message, params object[] args)
         {
-            ff14bot.Helpers.Logging.Write(level.dark,"[MUD] " + message, args);
+            ff14bot.Helpers.Logging.Write(level.Light,"[MUD] " + message, args);
         }
     }
 }

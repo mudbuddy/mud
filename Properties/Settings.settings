@@ -2,13 +2,13 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MudBase.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="IS_PAUSED" Type="System.Boolean" Scope="User">
+    <Setting Name="COMBAT_ROUTINE_PAUSED" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="ATTACK_OUT_OF_COMBAT" Type="System.Boolean" Scope="User">
+    <Setting Name="COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="HEAL_OUT_OF_COMBAT" Type="System.Boolean" Scope="User">
+    <Setting Name="COMBAT_ROUTINE_HEAL_OUT_OF_COMBAT" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="COMBAT_ROUTINE_PRECOMBATBUFF" Type="System.Boolean" Scope="User">
@@ -23,7 +23,7 @@
     <Setting Name="COMBAT_ROUTINE_COMBAT" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="TARGET_MOB_LIST" Type="System.Collections.Specialized.StringCollection" Scope="User">
+    <Setting Name="MOBS_TO_TARGET" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;Enter Mob Names Here...&lt;/string&gt;
@@ -32,7 +32,7 @@
     <Setting Name="SELECTED_TARGETING_MODE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="HOTKEY_PAUSE_MODIFIER" Type="System.Int32" Scope="User">
+    <Setting Name="HOTKEY_MODIFIER_PAUSE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="HOTKEY_PAUSE" Type="System.String" Scope="User">
@@ -41,25 +41,25 @@
     <Setting Name="HOTKEY_TARGET_MODE" Type="System.String" Scope="User">
       <Value Profile="(Default)">T</Value>
     </Setting>
-    <Setting Name="HOTKEY_TARGET_MODE_MODIFIER" Type="System.Int32" Scope="User">
+    <Setting Name="HOTKEY_MODIFIER_TARGET_MODE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="SELECTED_TARGET_LIST_TYPE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="EXECUTE_WHILE_MOVING" Type="System.Boolean" Scope="User">
+    <Setting Name="COMBAT_ROUTINE_EXECUTE_WHILE_MOVING" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="TARGETING_DISTANCE" Type="System.Decimal" Scope="User">
+    <Setting Name="MAX_TARGET_DISTANCE" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="AUTO_FACE_TARGET" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MOVE_TO_TARGET" Type="System.Boolean" Scope="User">
+    <Setting Name="AUTO_MOVE_TO_TARGET" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="MOVE_TARGET_RANGE" Type="System.Decimal" Scope="User">
+    <Setting Name="AUTO_MOVE_TARGET_RANGE" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="SELECTED_MOVE_TARGET" Type="System.Int32" Scope="User">
@@ -68,11 +68,29 @@
     <Setting Name="AUTO_SPRINT" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="FLASH_MESSAGES" Type="System.Boolean" Scope="User">
+    <Setting Name="UI_FLASH_MESSAGES" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ACTIVATE_FFXIV" Type="System.Boolean" Scope="User">
+    <Setting Name="UI_ACTIVATE_FFXIV" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="UI_ALWAYS_ON_TOP" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="HOTKEY_TOGGLE_MOVEMENT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">M</Value>
+    </Setting>
+    <Setting Name="HOTKEY_ADD_REM_TARGET_LIST" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Insert</Value>
+    </Setting>
+    <Setting Name="HOTKEY_MODIFIER_TOGGLE_MOVEMENT" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="HOTKEY_MODIFIER_ADD_TARGET_LIST" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="HOTKEY_MODIFIER_REM_TARGET_LIST" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>
 </SettingsFile>

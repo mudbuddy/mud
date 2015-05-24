@@ -12,7 +12,7 @@
             _value = "";
         }
 
-        public string MobName { get { return _value; } set { _value = value; } }
+        public string Name { get { return _value; } set { _value = value; } }
         string _value;
     }
 }
