@@ -358,6 +358,10 @@ namespace MudBase
                         && !Settings.Default.MOBS_TO_TARGET.Contains(c.Name)));
         }
 
-        public Character PartyTank { get { return VisiblePartyMembers.First(p => IsTank(p)); } }
+        public Character PartyTank { get {
+            if (VisiblePartyMembers.Count > 0)
+                return VisiblePartyMembers.First(p => IsTank(p));
+            else return null;
+        } }
     }
 }
