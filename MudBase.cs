@@ -23,7 +23,7 @@ namespace MudBase
     {
         public static String[] ModifierKeyStrings = { "None", "Shift", "Control", "Alt" };
         public static String[] TargetingModes = { "None", "Assist Tank", "Nearest Enemy" };
-        public static String[] TargetListTypes = { "Whitelist", "Blacklist" };
+        public static String[] TargetListTypes = { "None", "Whitelist", "Blacklist" };
         public static String[] MoveTarget = { "Target", "Tank" };
 
         public override string Name { get { return "Mud Assist"; } }
@@ -148,12 +148,13 @@ namespace MudBase
                                     req => Settings.Default.COMBAT_ROUTINE_COMBAT
                                         && !Core.Player.IsMounted
                                         && IsValidEnemy(Core.Player.CurrentTarget)
-                                        && (Settings.Default.MOBS_TO_TARGET.Count == 0
+                                        && (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("None")
+                                            || Settings.Default.MOBS_TO_TARGET.Count == 0
                                             || Settings.Default.MOBS_TO_TARGET[0].Length == 0 
-                                            || ((TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
-                                                    && !Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name)) 
-                                                || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist")
-                                                    && Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name)))),
+                                            || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
+                                                && !Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name)) 
+                                            || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist")
+                                                && Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name))),
                                     RoutineManager.Current.CombatBehavior))))));}
         }
 

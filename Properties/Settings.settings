@@ -45,7 +45,7 @@
       <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="SELECTED_TARGET_LIST_TYPE" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="COMBAT_ROUTINE_EXECUTE_WHILE_MOVING" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
