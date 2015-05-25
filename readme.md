@@ -1,4 +1,4 @@
-# Mud Assist 1.1.1
+# Mud Assist 1.1.2
 Mud Assist is Botbase for [Rebornbuddy](http://rebornbuddy.com) that gives full control over your CR.
 It's similar to the Combat Assist Botbase, but gives much more control over the CR.
 
@@ -29,6 +29,13 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
+- `1.1.2`: Hotkeys For Add/Remove Target
+- `1.1.2`: Can Now Acquire & Follow Targets While Mounted
+- `1.1.2`: Additional Target Filter For "None"
+- `1.1.2`: Numerous Target Filter Fixes / Enhancement
+- `1.1.2`: Get FFXIV Process Before Flashing Message (thanks newb23)
+- `1.1.2`: Use GameSettingsManager.FaceTargetOnAction For Facing (thanks newb23)
+- `1.1.2`: Other Various Bug Tweaks / Fixes
 - `1.1.1`: Minor bug fixes
 - `1.1.0`: Add Facing/Movement
 - `1.1.0`: Target List Enhancements
@@ -42,5 +49,5 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 - `1.0.0`: Release
 
 ## Planned Updates
-- (Feature) Button in UI for Removing Selected Target (Can already remove by pressing "Delete" key)
-- (Feature) Hotkeys for removing/adding targets to Target List
+- (Feature) Dynamically Change CR
+- Have any better ideas? PM me.
