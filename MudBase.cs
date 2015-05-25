@@ -31,6 +31,7 @@ namespace MudBase
         public override bool RequiresProfile { get { return false; } }
         public override ff14bot.Behavior.PulseFlags PulseFlags { get { return ff14bot.Behavior.PulseFlags.All; } }
         public static String LastTargetName = null;
+        public const String Version = "1.1.3.0";
 
         public override void OnButtonPress()
         {
@@ -98,44 +99,53 @@ namespace MudBase
                                 && Settings.Default.COMBAT_ROUTINE_HEAL
                                 && !Core.Player.IsMounted, 
                             RoutineManager.Current.HealBehavior),
+                // Stop Moving If Moving & In Range Of Target
+                        new Decorator(
+                            req => Settings.Default.AUTO_MOVE_TO_TARGET
+                                && MovementManager.IsMoving
+                                && GetMoveTarget() != Core.Player
+                                && Core.Player.Location.Distance3D(GetMoveTarget().Location) <= ((float)Settings.Default.AUTO_MOVE_TARGET_RANGE_MIN),
+                            new TreeSharp.Action(a => { Navigator.PlayerMover.MoveStop(); })),
+                // Move To Target If Not In Range & Not On The Move
+                        new Decorator(
+                            req => Settings.Default.AUTO_MOVE_TO_TARGET
+                                && !Core.Player.IsCasting
+                                && GetMoveTarget() != Core.Player
+                                && Core.Player.Location.Distance3D(GetMoveTarget().Location) > (float)Settings.Default.AUTO_MOVE_TARGET_RANGE_MAX,
+                            new TreeSharp.Action(a => { Navigator.PlayerMover.MoveTowards(GetMoveTarget().Location); })),
+                        // Find Suitable Target -- Assist Tank
+                        new Decorator(
+                            req => (PartyManager.IsInParty
+                                && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank")
+                                && VisiblePartyMembers.Where(pm => IsTank(pm)).Count() > 0
+                                && (!Core.Player.HasTarget
+                                    || !Core.Player.CurrentTarget.CanAttack)),
+                            new TreeSharp.Action(a => Assist(VisiblePartyMembers.Where(pm => IsTank(pm)).First()))),
+                        // Find Suitable Target -- Nearest Enemy
+                        new Decorator(
+                            req => TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Nearest Enemy")
+                                && !Core.Player.HasTarget,
+                            new TreeSharp.Action(a =>
+                            {
+                                GameObject target = GetClosestEnemyByName(Settings.Default.MOBS_TO_TARGET);
+                                if (target != null)
+                                    target.Target();
+                            })),
                         new Decorator(
                             req => (Core.Player.InCombat 
-                                || Settings.Default.COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT),
+                                || (Settings.Default.COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT 
+                                    && !PartyManager.IsInParty) 
+                                || (Settings.Default.COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT
+                                    && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank")
+                                    && PartyManager.IsInParty 
+                                    && PartyTank != null 
+                                    && PartyTank.InCombat)),
                             new PrioritySelector (
                                 // Combat Buffs
                                 new Decorator(
                                     req => Settings.Default.COMBAT_ROUTINE_COMBATBUFF
                                          && !Core.Player.IsMounted,
                                     RoutineManager.Current.CombatBuffBehavior),
-                                // Find Suitable Target
-                                new Decorator(
-                                    req => (PartyManager.IsInParty 
-                                        && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank") 
-                                        && VisiblePartyMembers.Where(pm => IsTank(pm)).Count() > 0 
-                                        && (!Core.Player.HasTarget 
-                                            || !Core.Player.CurrentTarget.CanAttack)),
-                                    new TreeSharp.Action(a => Assist(VisiblePartyMembers.Where(pm => IsTank(pm)).First()))),
-                                new Decorator(
-                                    req => TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Nearest Enemy") 
-                                        && !Core.Player.HasTarget,
-                                    new TreeSharp.Action(a => {
-                                        GameObject target = GetClosestEnemyByName(Settings.Default.MOBS_TO_TARGET);
-                                        if (target != null)
-                                            target.Target();})),
-                                // Stop Moving If Moving & In Range Of Target
-                                new Decorator(
-                                    req => Settings.Default.AUTO_MOVE_TO_TARGET
-                                        && MovementManager.IsMoving
-                                        && GetMoveTarget() != Core.Player
-                                        && Core.Player.Location.Distance3D(GetMoveTarget().Location) <= ((float)Settings.Default.AUTO_MOVE_TARGET_RANGE),
-                                    new TreeSharp.Action(a => { Navigator.PlayerMover.MoveStop(); })),
-                                // Move To Target If Not In Range & Not On The Move
-                                new Decorator(
-                                    req => Settings.Default.AUTO_MOVE_TO_TARGET
-                                        && !MovementManager.IsMoving
-                                        && GetMoveTarget() != Core.Player
-                                        && Core.Player.Location.Distance3D(GetMoveTarget().Location) > ((float)Settings.Default.AUTO_MOVE_TARGET_RANGE * 1.10),
-                                    new TreeSharp.Action(a => { Navigator.PlayerMover.MoveTowards(GetMoveTarget().Location); })),
                                 //// Face Target If Facing Enabled
                                 //new Decorator(
                                 //    req => Settings.Default.AUTO_FACE_TARGET 
@@ -347,5 +357,7 @@ namespace MudBase
                     || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
                         && !Settings.Default.MOBS_TO_TARGET.Contains(c.Name)));
         }
+
+        public Character PartyTank { get { return VisiblePartyMembers.First(p => IsTank(p)); } }
     }
 }

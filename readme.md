@@ -1,4 +1,4 @@
-# Mud Assist 1.1.2
+# Mud Assist 1.1.3
 Mud Assist is Botbase for [Rebornbuddy](http://rebornbuddy.com) that gives full control over your CR.
 It's similar to the Combat Assist Botbase, but gives much more control over the CR.
 
@@ -29,6 +29,9 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
+- `1.1.3`: Improved Tank Assist Code (Don't Start Combat Until Tank Does)
+- `1.1.3`: Improved Following Logic With Min/Max Range
+- `1.1.3`: Prevent Movement From Interrupting Casting
 - `1.1.2`: Hotkeys For Add/Remove Target
 - `1.1.2`: Can Now Acquire & Follow Targets While Mounted
 - `1.1.2`: Additional Target Filter For "None"

@@ -244,12 +244,12 @@ namespace MudBase.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public decimal AUTO_MOVE_TARGET_RANGE {
+        public decimal AUTO_MOVE_TARGET_RANGE_MIN {
             get {
-                return ((decimal)(this["AUTO_MOVE_TARGET_RANGE"]));
+                return ((decimal)(this["AUTO_MOVE_TARGET_RANGE_MIN"]));
             }
             set {
-                this["AUTO_MOVE_TARGET_RANGE"] = value;
+                this["AUTO_MOVE_TARGET_RANGE_MIN"] = value;
             }
         }
         
@@ -370,6 +370,30 @@ namespace MudBase.Properties {
             }
             set {
                 this["HOTKEY_MODIFIER_REM_TARGET_LIST"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
+        public decimal AUTO_MOVE_TARGET_RANGE_MAX {
+            get {
+                return ((decimal)(this["AUTO_MOVE_TARGET_RANGE_MAX"]));
+            }
+            set {
+                this["AUTO_MOVE_TARGET_RANGE_MAX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.1.3.0")]
+        public string VERSION {
+            get {
+                return ((string)(this["VERSION"]));
+            }
+            set {
+                this["VERSION"] = value;
             }
         }
     }

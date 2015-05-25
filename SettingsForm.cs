@@ -18,6 +18,7 @@ namespace MudBase
             InitializeComponent();
             Instance = this;
             this.TopMost = Settings.Default.UI_ALWAYS_ON_TOP;
+            this.Text = "Mud Assist v" + MudBase.Version + " Settings";
             dataGridView1.DataSource = new BindingList<StringValue>();
             DataGridViewColumn column = dataGridView1.Columns[0];
             column.Width = dataGridView1.Width - 65;

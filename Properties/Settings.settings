@@ -59,7 +59,7 @@
     <Setting Name="AUTO_MOVE_TO_TARGET" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="AUTO_MOVE_TARGET_RANGE" Type="System.Decimal" Scope="User">
+    <Setting Name="AUTO_MOVE_TARGET_RANGE_MIN" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="SELECTED_MOVE_TARGET" Type="System.Int32" Scope="User">
@@ -91,6 +91,9 @@
     </Setting>
     <Setting Name="HOTKEY_MODIFIER_REM_TARGET_LIST" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="AUTO_MOVE_TARGET_RANGE_MAX" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">15</Value>
     </Setting>
   </Settings>
 </SettingsFile>
