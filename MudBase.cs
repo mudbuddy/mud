@@ -147,14 +147,7 @@ namespace MudBase
                                 new Decorator(
                                     req => Settings.Default.COMBAT_ROUTINE_COMBAT
                                         && !Core.Player.IsMounted
-                                        && IsValidEnemy(Core.Player.CurrentTarget)
-                                        && (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("None")
-                                            || Settings.Default.MOBS_TO_TARGET.Count == 0
-                                            || Settings.Default.MOBS_TO_TARGET[0].Length == 0 
-                                            || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
-                                                && !Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name)) 
-                                            || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist")
-                                                && Settings.Default.MOBS_TO_TARGET.Contains(Core.Player.CurrentTarget.Name))),
+                                        && IsValidEnemy(Core.Player.CurrentTarget),
                                     RoutineManager.Current.CombatBehavior))))));}
         }
 
@@ -347,8 +340,9 @@ namespace MudBase
             if (!(obj is Character))
                 return false;
             Character c = (Character)obj;
-            return !c.IsMe && !c.IsDead && c.IsValid && c.IsTargetable && c.IsVisible && c.CanAttack 
-                && ((TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") 
+            return !c.IsMe && !c.IsDead && c.IsValid && c.IsTargetable && c.IsVisible && c.CanAttack
+                && (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("None")
+                    || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Whitelist") 
                         && Settings.Default.MOBS_TO_TARGET.Contains(c.Name))
                     || (TargetListTypes[Settings.Default.SELECTED_TARGET_LIST_TYPE].Equals("Blacklist")
                         && !Settings.Default.MOBS_TO_TARGET.Contains(c.Name)));
