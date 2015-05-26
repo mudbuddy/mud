@@ -1,6 +1,5 @@
 ﻿using ff14bot;
 using ff14bot.AClasses;
-using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
@@ -43,22 +42,20 @@ namespace MudBase
         public override void Initialize()
         {
             Logging.Write(LogLevel.PRIMARY, "Initializing");
-            Navigator.PlayerMover = new SlideMover();
-            Navigator.NavigationProvider = new GaiaNavigator();
+            Navigator.NavigationProvider = new NullProvider();
             ResetHotkeys();
         }
 
         public override void Start()
         {
+            Navigator.PlayerMover = new SlideMover();
             Logging.Write(LogLevel.PRIMARY, "Started");
         }
 
         public override void Stop()
         {
             _root = null;
-            (Navigator.NavigationProvider as GaiaNavigator).Dispose();
             Navigator.PlayerMover = new NullMover();
-            Navigator.NavigationProvider = new NullProvider();
             Logging.Write(LogLevel.PRIMARY, "Stopped!");
         }
 

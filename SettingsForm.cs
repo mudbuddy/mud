@@ -1,10 +1,7 @@
-﻿using ff14bot;
-using ff14bot.Managers;
-using ff14bot.Objects;
+﻿using ff14bot.Managers;
 using MudBase.Helpers;
 using MudBase.Properties;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
