@@ -53,4 +53,6 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 
 ## Planned Updates
 - (Feature) Dynamically Change CR
+- (Feature) Target Mode - Tank Mobs (Gain Aggro)
+- (Feature) Hotkey For Whitelisting / Blacklisting
 - Have any better ideas? PM me.

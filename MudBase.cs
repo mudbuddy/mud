@@ -50,6 +50,7 @@ namespace MudBase
         {
             Navigator.PlayerMover = new SlideMover();
             Logging.Write(LogLevel.PRIMARY, "Started");
+            ResetHotkeys();
         }
 
         public override void Stop()
@@ -57,6 +58,7 @@ namespace MudBase
             _root = null;
             Navigator.PlayerMover = new NullMover();
             Logging.Write(LogLevel.PRIMARY, "Stopped!");
+            UnregisterAllHotkeys();
         }
 
         public bool TreeTick()
@@ -166,12 +168,7 @@ namespace MudBase
         private static Hotkey _hotkeyAddRemTargetTargetList;
         public static void ResetHotkeys()
         {
-            UnregisterHotkey(_hotkeyPause);
-            UnregisterHotkey(_hotkeyTargetMode);
-            UnregisterHotkey(_hotkeyToggleMovement);
-            UnregisterHotkey(_hotkeyAddTargetTargetList);
-            UnregisterHotkey(_hotkeyAddRemTargetTargetList);
-            
+            UnregisterAllHotkeys();
             // Hotkey To Pause / Unpause
             Keys key;
             CultureInfo cinfo = Thread.CurrentThread.CurrentCulture;
@@ -280,6 +277,15 @@ namespace MudBase
                     });
                 Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyAddRemTargetTargetList.ToString());
             }
+        }
+
+        private static void UnregisterAllHotkeys()
+        {
+            UnregisterHotkey(_hotkeyPause);
+            UnregisterHotkey(_hotkeyTargetMode);
+            UnregisterHotkey(_hotkeyToggleMovement);
+            UnregisterHotkey(_hotkeyAddTargetTargetList);
+            UnregisterHotkey(_hotkeyAddRemTargetTargetList);
         }
 
         public static void UnregisterHotkey(Hotkey hk)
