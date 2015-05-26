@@ -56,6 +56,7 @@ namespace MudBase
         public override void Stop()
         {
             _root = null;
+            (Navigator.NavigationProvider as GaiaNavigator).Dispose();
             Navigator.PlayerMover = new NullMover();
             Navigator.NavigationProvider = new NullProvider();
             Logging.Write(LogLevel.PRIMARY, "Stopped!");
@@ -360,8 +361,11 @@ namespace MudBase
 
         public Character PartyTank { get {
             if (VisiblePartyMembers.Count > 0)
-                return VisiblePartyMembers.First(p => IsTank(p));
-            else return null;
+                try {
+                    return VisiblePartyMembers.First(p => IsTank(p)); } 
+                catch (Exception e) { 
+                    return null; }
+                return null;
         } }
     }
 }
