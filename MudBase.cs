@@ -30,7 +30,7 @@ namespace MudBase
         public override bool RequiresProfile { get { return false; } }
         public override ff14bot.Behavior.PulseFlags PulseFlags { get { return ff14bot.Behavior.PulseFlags.All; } }
         public static String LastTargetName = null;
-        public const String Version = "1.1.3.0";
+        public const String Version = "1.1.3.4";
 
         public override void OnButtonPress()
         {
@@ -99,14 +99,14 @@ namespace MudBase
                                 && Settings.Default.COMBAT_ROUTINE_HEAL
                                 && !Core.Player.IsMounted, 
                             RoutineManager.Current.HealBehavior),
-                // Stop Moving If Moving & In Range Of Target
+                        // Stop Moving If Moving & In Range Of Target
                         new Decorator(
                             req => Settings.Default.AUTO_MOVE_TO_TARGET
                                 && MovementManager.IsMoving
                                 && GetMoveTarget() != Core.Player
                                 && Core.Player.Location.Distance3D(GetMoveTarget().Location) <= ((float)Settings.Default.AUTO_MOVE_TARGET_RANGE_MIN),
                             new TreeSharp.Action(a => { Navigator.PlayerMover.MoveStop(); })),
-                // Move To Target If Not In Range & Not On The Move
+                        // Move To Target If Not In Range & Not On The Move
                         new Decorator(
                             req => Settings.Default.AUTO_MOVE_TO_TARGET
                                 && !Core.Player.IsCasting

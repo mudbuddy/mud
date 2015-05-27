@@ -26,5 +26,10 @@ namespace MudBase.Helpers
         {
             ff14bot.Helpers.Logging.Write(level.Light,"[MUD] " + message, args);
         }
+
+        public static void Write(String message, params object[] args)
+        {
+            Write(LogLevel.INFO, message, args);
+        }
     }
 }
