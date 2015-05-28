@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MudBase.Properties {
+namespace Mud.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -37,19 +37,19 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool COMBAT_ROUTINE_PULL {
             get {
-                return ((bool)(this["COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT"]));
+                return ((bool)(this["COMBAT_ROUTINE_PULL"]));
             }
             set {
-                this["COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT"] = value;
+                this["COMBAT_ROUTINE_PULL"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool COMBAT_ROUTINE_HEAL_OUT_OF_COMBAT {
             get {
                 return ((bool)(this["COMBAT_ROUTINE_HEAL_OUT_OF_COMBAT"]));
@@ -135,7 +135,7 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int HOTKEY_MODIFIER_PAUSE {
             get {
                 return ((int)(this["HOTKEY_MODIFIER_PAUSE"]));
@@ -147,7 +147,7 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("P")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Z")]
         public string HOTKEY_PAUSE {
             get {
                 return ((string)(this["HOTKEY_PAUSE"]));
@@ -159,7 +159,7 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("T")]
+        [global::System.Configuration.DefaultSettingValueAttribute("X")]
         public string HOTKEY_TARGET_MODE {
             get {
                 return ((string)(this["HOTKEY_TARGET_MODE"]));
@@ -207,7 +207,7 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
         public decimal MAX_TARGET_DISTANCE {
             get {
                 return ((decimal)(this["MAX_TARGET_DISTANCE"]));
@@ -219,7 +219,7 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool AUTO_FACE_TARGET {
             get {
                 return ((bool)(this["AUTO_FACE_TARGET"]));
@@ -231,37 +231,37 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool AUTO_MOVE_TO_TARGET {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AUTO_MOVE {
             get {
-                return ((bool)(this["AUTO_MOVE_TO_TARGET"]));
+                return ((bool)(this["AUTO_MOVE"]));
             }
             set {
-                this["AUTO_MOVE_TO_TARGET"] = value;
+                this["AUTO_MOVE"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public decimal AUTO_MOVE_TARGET_RANGE_MIN {
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public decimal AUTO_MOVE_FOLLOW_RANGE_MIN {
             get {
-                return ((decimal)(this["AUTO_MOVE_TARGET_RANGE_MIN"]));
+                return ((decimal)(this["AUTO_MOVE_FOLLOW_RANGE_MIN"]));
             }
             set {
-                this["AUTO_MOVE_TARGET_RANGE_MIN"] = value;
+                this["AUTO_MOVE_FOLLOW_RANGE_MIN"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int SELECTED_MOVE_TARGET {
+        public int SELECTED_MOVEMENT_MODE {
             get {
-                return ((int)(this["SELECTED_MOVE_TARGET"]));
+                return ((int)(this["SELECTED_MOVEMENT_MODE"]));
             }
             set {
-                this["SELECTED_MOVE_TARGET"] = value;
+                this["SELECTED_MOVEMENT_MODE"] = value;
             }
         }
         
@@ -315,7 +315,7 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("M")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C")]
         public string HOTKEY_TOGGLE_MOVEMENT {
             get {
                 return ((string)(this["HOTKEY_TOGGLE_MOVEMENT"]));
@@ -375,25 +375,109 @@ namespace MudBase.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("15")]
-        public decimal AUTO_MOVE_TARGET_RANGE_MAX {
+        [global::System.Configuration.DefaultSettingValueAttribute("12")]
+        public decimal AUTO_MOVE_FOLLOW_RANGE_MAX {
             get {
-                return ((decimal)(this["AUTO_MOVE_TARGET_RANGE_MAX"]));
+                return ((decimal)(this["AUTO_MOVE_FOLLOW_RANGE_MAX"]));
             }
             set {
-                this["AUTO_MOVE_TARGET_RANGE_MAX"] = value;
+                this["AUTO_MOVE_FOLLOW_RANGE_MAX"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.1.3.0")]
-        public string VERSION {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AUTO_TALK_NPCS {
             get {
-                return ((string)(this["VERSION"]));
+                return ((bool)(this["AUTO_TALK_NPCS"]));
             }
             set {
-                this["VERSION"] = value;
+                this["AUTO_TALK_NPCS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int SELECTED_NAVIGATION_PROVIDER {
+            get {
+                return ((int)(this["SELECTED_NAVIGATION_PROVIDER"]));
+            }
+            set {
+                this["SELECTED_NAVIGATION_PROVIDER"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AUTO_ACCEPT_QUESTS {
+            get {
+                return ((bool)(this["AUTO_ACCEPT_QUESTS"]));
+            }
+            set {
+                this["AUTO_ACCEPT_QUESTS"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool COMBAT_ROUTINE_REST {
+            get {
+                return ((bool)(this["COMBAT_ROUTINE_REST"]));
+            }
+            set {
+                this["COMBAT_ROUTINE_REST"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool COMBAT_ROUTINE_PULL_BUFF {
+            get {
+                return ((bool)(this["COMBAT_ROUTINE_PULL_BUFF"]));
+            }
+            set {
+                this["COMBAT_ROUTINE_PULL_BUFF"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.5")]
+        public decimal AUTO_MOVE_TARGET_RANGE {
+            get {
+                return ((decimal)(this["AUTO_MOVE_TARGET_RANGE"]));
+            }
+            set {
+                this["AUTO_MOVE_TARGET_RANGE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int HOTKEY_MODIFIER_MOVEMENT_MODE {
+            get {
+                return ((int)(this["HOTKEY_MODIFIER_MOVEMENT_MODE"]));
+            }
+            set {
+                this["HOTKEY_MODIFIER_MOVEMENT_MODE"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("F")]
+        public string HOTKEY_MOVEMENT_MODE {
+            get {
+                return ((string)(this["HOTKEY_MOVEMENT_MODE"]));
+            }
+            set {
+                this["HOTKEY_MOVEMENT_MODE"] = value;
             }
         }
     }

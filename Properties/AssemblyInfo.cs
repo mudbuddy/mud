@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(MudBase.MudBase.Version)]
-[assembly: AssemblyFileVersion(MudBase.MudBase.Version)]
+[assembly: AssemblyVersion(Mud.MudBase.Version)]
+[assembly: AssemblyFileVersion(Mud.MudBase.Version)]

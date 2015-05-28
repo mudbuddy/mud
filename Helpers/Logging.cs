@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 
-namespace MudBase.Helpers
+namespace Mud.Helpers
 {
     public class LogLevel 
     {
@@ -13,10 +13,14 @@ namespace MudBase.Helpers
 
         public Color Light { get; private set; }
         public Color Dark  { get; private set; }
+        public System.Drawing.Color DrawingLight { get; private set; }
+        public System.Drawing.Color DrawingDark { get; private set; }
 
         public LogLevel(Color light, Color dark) {
-            this.Light = light;
-            this.Dark  = dark;
+            this.Light          = light;
+            this.Dark           = dark;
+            this.DrawingLight   = System.Drawing.Color.FromArgb(Light.A, Light.R, Light.G, Light.B);
+            this.DrawingDark    = System.Drawing.Color.FromArgb(Dark.A, Dark.R, Dark.G, Dark.B);
         } 
     }
 

@@ -1,11 +1,13 @@
 ﻿using ff14bot;
 using ff14bot.AClasses;
+using ff14bot.Behavior;
 using ff14bot.Enums;
 using ff14bot.Managers;
 using ff14bot.Navigation;
 using ff14bot.Objects;
-using MudBase.Helpers;
-using MudBase.Properties;
+using ff14bot.RemoteWindows;
+using Mud.Helpers;
+using Mud.Properties;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -16,156 +18,269 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using TreeSharp;
 
-namespace MudBase
+namespace Mud
 {
     public class MudBase : BotBase
     {
+        public static String LastTargetName = null;
+        public const  String Version        = "2.0.0";
+
+        #region Selectable Values
+
         public static String[] ModifierKeyStrings = { "None", "Shift", "Control", "Alt" };
-        public static String[] TargetingModes = { "None", "Assist Tank", "Nearest Enemy" };
+        public static String[] TargetingModes = { "None", "Assist Tank", "Being Tanked", "Nearest Enemy" };
         public static String[] TargetListTypes = { "None", "Whitelist", "Blacklist" };
-        public static String[] MoveTarget = { "Target", "Tank" };
+        public static String[] MovementModes = { "Combat", "Tank", "Follow" };
+        public static String[] SupportedNavigationProviders = { "Null", "Gaia" };
+
+        #endregion Selectable Values
+
+        #region BotBase
+
+        public bool TreeTick()
+        {
+            if (Core.Player.CurrentTarget != null && Core.Player.CurrentTarget.Name != null)
+                LastTargetName = Core.Player.CurrentTarget.Name;
+            WaypointManager.Track();
+            SettingsForm.UpdateStatus();
+            return true;
+        }
+
+        public static void UpdateNavigationProvider()
+        {
+            //Logging.Write(LogLevel.PRIMARY, "Updating Navigation Provider to: {0}", MudBase.SupportedNavigationProviders[Properties.Settings.Default.SELECTED_NAVIGATION_PROVIDER]);
+            switch (MudBase.SupportedNavigationProviders[Properties.Settings.Default.SELECTED_NAVIGATION_PROVIDER])
+            {
+                case "Null":
+                    if (!(Navigator.NavigationProvider is NullProvider))
+                    {
+                        GaiaNavigator g = (Navigator.NavigationProvider as GaiaNavigator);
+                        if (g != null) g.Dispose();
+                        Navigator.NavigationProvider = new NullProvider();
+                        Logging.Write(LogLevel.PRIMARY, "Using Null Navigator");
+                    }
+                    break;
+                case "Gaia":
+                    if (!(Navigator.NavigationProvider is GaiaNavigator))
+                    {
+                        Navigator.NavigationProvider = new GaiaNavigator();
+                        Logging.Write(LogLevel.PRIMARY, "Using Gaia Navigator");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #endregion BotBase
+
+        #region Overrides
 
         public override string Name { get { return "Mud Assist"; } }
         public override bool WantButton { get { return true; } }
         public override bool RequiresProfile { get { return false; } }
-        public override ff14bot.Behavior.PulseFlags PulseFlags { get { return ff14bot.Behavior.PulseFlags.All; } }
-        public static String LastTargetName = null;
-        public const String Version = "1.1.3.4";
+        public override PulseFlags PulseFlags { get { return PulseFlags.All; } }
 
         public override void OnButtonPress()
         {
             Logging.Write(LogLevel.INFO, "Opening Settings");
-            SettingsForm settings = new SettingsForm();
-            settings.ShowDialog();
+            SettingsForm _Settings = new SettingsForm();
+            _Settings.ShowDialog();
         }
 
         public override void Initialize()
         {
             Logging.Write(LogLevel.PRIMARY, "Initializing");
-            Navigator.NavigationProvider = new NullProvider();
-            ResetHotkeys();
+            MudBase.ResetHotkeys();
         }
 
         public override void Start()
         {
+            MudBase.UpdateNavigationProvider();
             Navigator.PlayerMover = new SlideMover();
             Logging.Write(LogLevel.PRIMARY, "Started");
-            ResetHotkeys();
+            MudBase.ResetHotkeys();
         }
 
         public override void Stop()
         {
-            _root = null;
+            _Root = null;
             Navigator.PlayerMover = new NullMover();
+            GaiaNavigator g = (Navigator.NavigationProvider as GaiaNavigator);
+            if (g != null) g.Dispose();
+            Navigator.NavigationProvider = new NullProvider();
             Logging.Write(LogLevel.PRIMARY, "Stopped!");
-            UnregisterAllHotkeys();
+            MudBase.UnregisterAllHotkeys();
         }
 
-        public bool TreeTick()
+        private Composite _Root;
+        public override Composite Root
         {
-            if(Core.Player.CurrentTarget != null && Core.Player.CurrentTarget.Name != null)
-                LastTargetName = Core.Player.CurrentTarget.Name;
-            return true;
+            get
+            {
+                return _Root ?? (_Root =
+                    new Decorator(
+                        req => TreeTick()
+                            && !Settings.Default.COMBAT_ROUTINE_PAUSED
+                            && !Core.Player.IsCasting
+                            && (!MovementManager.IsMoving
+                                || Settings.Default.COMBAT_ROUTINE_EXECUTE_WHILE_MOVING),
+                        new PrioritySelector(
+                    // Questing Stuff
+                    //new Decorator(
+                    //    req => Settings.Default.AUTO_SKIP_CUTSCENES
+                    //        && QuestLogManager.InCutscene,
+                    //    new TreeSharp.Action(a => { 
+                    //        SendKeys.SendWait(Keys.Escape.ToString());
+                    //        if (SelectYesno.IsOpen)
+                    //            SelectYesno.ClickYes();
+                    //    })),
+                            new Decorator(
+                                req => Settings.Default.AUTO_TALK_NPCS
+                                    && Talk.DialogOpen,
+                                new TreeSharp.Action(a => { Talk.Next(); })),
+                            new Decorator(
+                                req => Settings.Default.AUTO_ACCEPT_QUESTS
+                                    && JournalAccept.IsOpen,
+                                new TreeSharp.Action(a => { JournalAccept.Accept(); })),
+                    // Auto-Sprint
+                            new Decorator(
+                                req => Settings.Default.AUTO_SPRINT
+                                    && !IsValidEnemy(Core.Player.CurrentTarget)
+                                    && !Core.Player.InCombat
+                                    && Actionmanager.IsSprintReady
+                                    && MovementManager.IsMoving
+                                    && !DutyManager.InInstance
+                                    && !Core.Player.IsMounted,
+                                new TreeSharp.Action(a => { Actionmanager.Sprint(); })),
+                    // Resting
+                            new Decorator(
+                                req => RoutineManager.Current.RestBehavior != null
+                                    && !Core.Player.InCombat
+                                    && Settings.Default.COMBAT_ROUTINE_REST
+                                    && !Core.Player.IsMounted
+                                    && Actionmanager.IsSprintReady,
+                                RoutineManager.Current.RestBehavior),
+                    // Out Of Combat Healing
+                            new Decorator(
+                                req => RoutineManager.Current.HealBehavior != null
+                                    && (Core.Player.InCombat
+                                        || Settings.Default.COMBAT_ROUTINE_HEAL_OUT_OF_COMBAT)
+                                    && Settings.Default.COMBAT_ROUTINE_HEAL
+                                    && !Core.Player.IsMounted,
+                                RoutineManager.Current.HealBehavior),
+                    // Pre-Combat Buffs
+                            new Decorator(
+                                req => RoutineManager.Current.PreCombatBuffBehavior != null
+                                    && !Core.Player.InCombat
+                                    && Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF
+                                    && !Core.Player.IsMounted,
+                                RoutineManager.Current.PreCombatBuffBehavior),
+                    // Stop Moving If Moving & In Range Of Target
+                            new Decorator(
+                                req => Settings.Default.AUTO_MOVE
+                                    //&& MovementManager.IsMoving
+                                    && WaypointManager.IsNavigating
+                                    && WaypointManager.Next == null,
+                                new TreeSharp.Action(a => { WaypointManager.StopNavigating(); })),
+                    // Move To Target If Not In Range & Not On The Move
+                            new Decorator(
+                                req => Settings.Default.AUTO_MOVE
+                                    && !Core.Player.IsCasting
+                                    && WaypointManager.Next != null,
+                                new TreeSharp.Action(a =>
+                                {
+                                    WaypointManager.MoveToNext();
+                                })),
+                    // Find Suitable Target -- Lowest HP Tanked
+                            new Decorator(
+                                req => (PartyManager.IsInParty
+                                    && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Being Tanked")
+                                    && VisiblePartyMembers.Where(pm => IsTank(pm)).Count() > 0
+                                    && (!Core.Player.HasTarget
+                                        || !Core.Player.CurrentTarget.CanAttack)),
+                                new TreeSharp.Action(a =>
+                                {
+                                    IEnumerable<GameObject> objs = GameObjectManager.GameObjects.Where(o => IsValidEnemy(o)
+                                        && (o as Character).InCombat
+                                        && (o as Character).CurrentTargetId == PartyTank.ObjectId);
+                                    if (objs != null && objs.Count() > 0)
+                                    {
+                                        objs.OrderBy(o => o.CurrentHealthPercent).First().Target();
+                                    }
+                                })),
+                    // Find Suitable Target -- Assist Tank
+                            new Decorator(
+                                req => (PartyManager.IsInParty
+                                    && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank")
+                                    && VisiblePartyMembers.Where(pm => IsTank(pm)).Count() > 0
+                                    && (!Core.Player.HasTarget
+                                        || !Core.Player.CurrentTarget.CanAttack)),
+                                new TreeSharp.Action(a => Assist(VisiblePartyMembers.Where(pm => IsTank(pm)).First()))),
+                    // Find Suitable Target -- Nearest Enemy
+                            new Decorator(
+                                req => TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Nearest Enemy")
+                                    && !Core.Player.HasTarget,
+                                new TreeSharp.Action(a =>
+                                {
+                                    GameObject target = GetClosestEnemyByName(Settings.Default.MOBS_TO_TARGET);
+                                    if (target != null)
+                                        target.Target();
+                                })),
+                    // Pull Buff Behavior
+                            new Decorator(
+                                req => RoutineManager.Current.PullBuffBehavior != null
+                                    && !Core.Player.InCombat
+                                    && IsValidEnemy(Core.Player.CurrentTarget)
+                                    && Settings.Default.COMBAT_ROUTINE_PULL_BUFF
+                                    && !PartyManager.IsInParty,
+                                RoutineManager.Current.PullBuffBehavior),
+                    // Pull Behavior
+                            new Decorator(
+                                req => !Core.Player.InCombat
+                                    && IsValidEnemy(Core.Player.CurrentTarget)
+                                    && Settings.Default.COMBAT_ROUTINE_PULL
+                                    && (!PartyManager.IsInParty || IsTank(Core.Player))
+                                    && Core.Player.CurrentTarget.Location.Distance3D(Core.Player.Location) <= RoutineManager.Current.PullRange,
+                                new PrioritySelector(
+                                    RoutineManager.Current.PullBehavior,
+                                    RoutineManager.Current.CombatBehavior)),
+                    // Executed In Combat
+                            new Decorator(
+                                req => !Core.Player.IsMounted
+                                    && (Core.Player.InCombat
+                                        || (TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank")
+                                            && PartyManager.IsInParty
+                                            && PartyTank != null
+                                            && PartyTank.InCombat)),
+                                new PrioritySelector(
+                    // Combat Buffs
+                                    new Decorator(
+                                        req => RoutineManager.Current.CombatBuffBehavior != null
+                                            && Settings.Default.COMBAT_ROUTINE_COMBATBUFF
+                                             && !Core.Player.IsMounted,
+                                        RoutineManager.Current.CombatBuffBehavior),
+                    // Combat Routine
+                                    new Decorator(
+                                        req => RoutineManager.Current.CombatBehavior != null
+                                            && Settings.Default.COMBAT_ROUTINE_COMBAT
+                                            && !Core.Player.IsMounted
+                                            && IsValidEnemy(Core.Player.CurrentTarget)
+                                            && Core.Player.CurrentTarget.Location.Distance3D(Core.Player.Location) <= RoutineManager.Current.PullRange,
+                                        RoutineManager.Current.CombatBehavior))))));
+            }
         }
 
-        private Composite _root;
-        public override Composite Root { get {
-            return _root ?? (_root =
-                new Decorator( 
-                    req => TreeTick()
-                        && !Settings.Default.COMBAT_ROUTINE_PAUSED 
-                        && !Core.Player.IsCasting 
-                        && (!MovementManager.IsMoving 
-                            || Settings.Default.COMBAT_ROUTINE_EXECUTE_WHILE_MOVING),
-                    new PrioritySelector(
-                        // Auto-Sprint
-                        new Decorator(
-                            req => Settings.Default.AUTO_SPRINT 
-                                && !Core.Player.InCombat 
-                                && Actionmanager.IsSprintReady 
-                                && MovementManager.IsMoving
-                                && !Core.Player.IsMounted,
-                            new TreeSharp.Action(a => {Actionmanager.Sprint();})),
-                        // Pre-Combat Buffs
-                        new Decorator(
-                            req => !Core.Player.InCombat && 
-                                Settings.Default.COMBAT_ROUTINE_PRECOMBATBUFF
-                                && !Core.Player.IsMounted, 
-                            RoutineManager.Current.PreCombatBuffBehavior),
-                        // Out Of Combat Healing
-                        new Decorator(
-                            req => (Core.Player.InCombat 
-                                    || Settings.Default.COMBAT_ROUTINE_HEAL_OUT_OF_COMBAT) 
-                                && Settings.Default.COMBAT_ROUTINE_HEAL
-                                && !Core.Player.IsMounted, 
-                            RoutineManager.Current.HealBehavior),
-                        // Stop Moving If Moving & In Range Of Target
-                        new Decorator(
-                            req => Settings.Default.AUTO_MOVE_TO_TARGET
-                                && MovementManager.IsMoving
-                                && GetMoveTarget() != Core.Player
-                                && Core.Player.Location.Distance3D(GetMoveTarget().Location) <= ((float)Settings.Default.AUTO_MOVE_TARGET_RANGE_MIN),
-                            new TreeSharp.Action(a => { Navigator.PlayerMover.MoveStop(); })),
-                        // Move To Target If Not In Range & Not On The Move
-                        new Decorator(
-                            req => Settings.Default.AUTO_MOVE_TO_TARGET
-                                && !Core.Player.IsCasting
-                                && GetMoveTarget() != Core.Player
-                                && Core.Player.Location.Distance3D(GetMoveTarget().Location) > (float)Settings.Default.AUTO_MOVE_TARGET_RANGE_MAX,
-                            new TreeSharp.Action(a => { Navigator.PlayerMover.MoveTowards(GetMoveTarget().Location); })),
-                        // Find Suitable Target -- Assist Tank
-                        new Decorator(
-                            req => (PartyManager.IsInParty
-                                && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank")
-                                && VisiblePartyMembers.Where(pm => IsTank(pm)).Count() > 0
-                                && (!Core.Player.HasTarget
-                                    || !Core.Player.CurrentTarget.CanAttack)),
-                            new TreeSharp.Action(a => Assist(VisiblePartyMembers.Where(pm => IsTank(pm)).First()))),
-                        // Find Suitable Target -- Nearest Enemy
-                        new Decorator(
-                            req => TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Nearest Enemy")
-                                && !Core.Player.HasTarget,
-                            new TreeSharp.Action(a =>
-                            {
-                                GameObject target = GetClosestEnemyByName(Settings.Default.MOBS_TO_TARGET);
-                                if (target != null)
-                                    target.Target();
-                            })),
-                        new Decorator(
-                            req => (Core.Player.InCombat 
-                                || (Settings.Default.COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT 
-                                    && !PartyManager.IsInParty) 
-                                || (Settings.Default.COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT
-                                    && TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank")
-                                    && PartyManager.IsInParty 
-                                    && PartyTank != null 
-                                    && PartyTank.InCombat)),
-                            new PrioritySelector (
-                                // Combat Buffs
-                                new Decorator(
-                                    req => Settings.Default.COMBAT_ROUTINE_COMBATBUFF
-                                         && !Core.Player.IsMounted,
-                                    RoutineManager.Current.CombatBuffBehavior),
-                                //// Face Target If Facing Enabled
-                                //new Decorator(
-                                //    req => Settings.Default.AUTO_FACE_TARGET 
-                                //        && IsValidEnemy(Core.Player.CurrentTarget) 
-                                //        && !Core.Player.IsFacing(Core.Player.CurrentTarget),
-                                //    new TreeSharp.Action(a => {
-                                //        Core.Player.CurrentTarget.Face(); })),
-                                // Combat Routine
-                                new Decorator(
-                                    req => Settings.Default.COMBAT_ROUTINE_COMBAT
-                                        && !Core.Player.IsMounted
-                                        && IsValidEnemy(Core.Player.CurrentTarget),
-                                    RoutineManager.Current.CombatBehavior))))));}
-        }
+        #endregion Overrides
+
+        #region Hotkeys
 
         private static Hotkey _hotkeyPause;
         private static Hotkey _hotkeyTargetMode;
         private static Hotkey _hotkeyToggleMovement;
         private static Hotkey _hotkeyAddTargetTargetList;
         private static Hotkey _hotkeyAddRemTargetTargetList;
+        private static Hotkey _hotkeyToggleMovementMode;
         public static void ResetHotkeys()
         {
             UnregisterAllHotkeys();
@@ -229,8 +344,9 @@ namespace MudBase
                     ModifierKeyStrings[Settings.Default.HOTKEY_MODIFIER_TOGGLE_MOVEMENT]),
                     hkToggleMovement =>
                     {
-                        Settings.Default.AUTO_MOVE_TO_TARGET = !Settings.Default.AUTO_MOVE_TO_TARGET;
-                        if (Settings.Default.AUTO_MOVE_TO_TARGET)
+                        Settings.Default.AUTO_MOVE = !Settings.Default.AUTO_MOVE;
+                        WaypointManager.StopNavigating();
+                        if (Settings.Default.AUTO_MOVE)
                         {
                             Logging.Write(LogLevel.PRIMARY, "Movement ON");
                             if (Settings.Default.UI_FLASH_MESSAGES)
@@ -242,6 +358,31 @@ namespace MudBase
                             if (Settings.Default.UI_FLASH_MESSAGES)
                                 FlashMessage.Flash(LogLevel.WARNING, "Movement OFF");
                         }
+                    });
+                Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyToggleMovement.ToString());
+            }
+
+            // Hotkey To Toggle Movement
+            try { key = (Keys)(new KeysConverter()).ConvertFromString(text.ToTitleCase(Settings.Default.HOTKEY_MOVEMENT_MODE)); }
+            catch (Exception e) { key = Keys.None; }
+            if (key != Keys.None)
+            {
+                _hotkeyToggleMovement = HotkeyManager.Register(
+                    "HK_MUD_TOGGLE_MOVEMENT_MODE",
+                    key,
+                    (ModifierKeys)Enum.Parse(typeof(ModifierKeys),
+                    ModifierKeyStrings[Settings.Default.HOTKEY_MODIFIER_MOVEMENT_MODE]),
+                    hkToggleMovementMode =>
+                    {
+                        //Logging.Write(LogLevel.PRIMARY, "Previous Targeting Mode: " + TargetingModes[Settings.Default.SELECTED_TARGETING_MODE]);
+                        if ((Settings.Default.SELECTED_MOVEMENT_MODE + 1) == MudBase.MovementModes.Length)
+                            Settings.Default.SELECTED_MOVEMENT_MODE = 0;
+                        else
+                            Settings.Default.SELECTED_MOVEMENT_MODE = (Settings.Default.SELECTED_MOVEMENT_MODE + 1);
+                        SettingsForm.SelectMovementMode(Settings.Default.SELECTED_MOVEMENT_MODE);
+                        Logging.Write(LogLevel.PRIMARY, "Move Mode: " + MovementModes[Settings.Default.SELECTED_MOVEMENT_MODE]);
+                        if (Settings.Default.UI_FLASH_MESSAGES)
+                            FlashMessage.Flash(LogLevel.WARNING, "Move Mode: " + MovementModes[Settings.Default.SELECTED_MOVEMENT_MODE]); 
                     });
                 Logging.Write(LogLevel.INFO, "Added Hotkey: " + _hotkeyToggleMovement.ToString());
             }
@@ -279,13 +420,14 @@ namespace MudBase
             }
         }
 
-        private static void UnregisterAllHotkeys()
+        public static void UnregisterAllHotkeys()
         {
-            UnregisterHotkey(_hotkeyPause);
-            UnregisterHotkey(_hotkeyTargetMode);
-            UnregisterHotkey(_hotkeyToggleMovement);
-            UnregisterHotkey(_hotkeyAddTargetTargetList);
-            UnregisterHotkey(_hotkeyAddRemTargetTargetList);
+            MudBase.UnregisterHotkey(_hotkeyPause);
+            MudBase.UnregisterHotkey(_hotkeyTargetMode);
+            MudBase.UnregisterHotkey(_hotkeyToggleMovement);
+            MudBase.UnregisterHotkey(_hotkeyAddTargetTargetList);
+            MudBase.UnregisterHotkey(_hotkeyAddRemTargetTargetList);
+            MudBase.UnregisterHotkey(_hotkeyToggleMovementMode);
         }
 
         public static void UnregisterHotkey(Hotkey hk)
@@ -295,7 +437,11 @@ namespace MudBase
                 Logging.Write(LogLevel.WARNING, "Unregistered Hotkey: " + hk.ToString()); }
         }
 
-        public GameObject GetClosestEnemyByName(StringCollection names) {
+        #endregion Hotkeys
+
+        #region Helper Methods
+
+        public static GameObject GetClosestEnemyByName(StringCollection names) {
             //Logging.Write(LogLevel.INFO, "Finding nearest enemy to attack...");
             return GameObjectManager.GameObjects.Where(u => 
                     IsValidEnemy(u)
@@ -336,17 +482,6 @@ namespace MudBase
                 target.Target(); }
         }
 
-        public static Character GetMoveTarget()
-        {
-            Character targ = Core.Player;
-            IEnumerable<Character> tanks = VisiblePartyMembers.Where(p => IsTank(p));
-            if (tanks.Count() > 0 && MudBase.MoveTarget[Settings.Default.SELECTED_MOVE_TARGET].Equals("Tank"))
-                targ = tanks.First();
-            else if (IsValidEnemy(Core.Player.CurrentTarget) && MudBase.MoveTarget[Settings.Default.SELECTED_MOVE_TARGET].Equals("Target"))
-                targ = (Character)Core.Player.CurrentTarget;
-            return targ;
-        }
-
         public static bool IsValidEnemy(GameObject obj)
         {
             if (obj == null)
@@ -362,7 +497,7 @@ namespace MudBase
                         && !Settings.Default.MOBS_TO_TARGET.Contains(c.Name)));
         }
 
-        public Character PartyTank { get {
+        public static Character PartyTank { get {
             if (VisiblePartyMembers.Count > 0)
                 try {
                     return VisiblePartyMembers.First(p => IsTank(p)); } 
@@ -370,5 +505,15 @@ namespace MudBase
                     return null; }
                 return null;
         } }
+
+        public static bool InCombat
+        {
+            get
+            {
+                return VisiblePartyMembers.Where(p => p.InCombat) != null;
+            }
+        }
+
+        #endregion Helper Methods
     }
 }

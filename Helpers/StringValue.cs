@@ -1,4 +1,4 @@
-﻿namespace MudBase.Helpers
+﻿namespace Mud.Helpers
 {
     public class StringValue
     {

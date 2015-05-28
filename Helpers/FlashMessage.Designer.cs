@@ -1,4 +1,4 @@
-﻿namespace MudBase
+﻿namespace Mud
 {
     partial class FlashMessage
     {

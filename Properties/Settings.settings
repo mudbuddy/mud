@@ -1,15 +1,15 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MudBase.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Mud.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="COMBAT_ROUTINE_PAUSED" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="COMBAT_ROUTINE_ATTACK_OUT_OF_COMBAT" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="COMBAT_ROUTINE_PULL" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="COMBAT_ROUTINE_HEAL_OUT_OF_COMBAT" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="COMBAT_ROUTINE_PRECOMBATBUFF" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -33,13 +33,13 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="HOTKEY_MODIFIER_PAUSE" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">2</Value>
+      <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="HOTKEY_PAUSE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">P</Value>
+      <Value Profile="(Default)">Z</Value>
     </Setting>
     <Setting Name="HOTKEY_TARGET_MODE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">T</Value>
+      <Value Profile="(Default)">X</Value>
     </Setting>
     <Setting Name="HOTKEY_MODIFIER_TARGET_MODE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
@@ -51,18 +51,18 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="MAX_TARGET_DISTANCE" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">25</Value>
+      <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="AUTO_FACE_TARGET" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AUTO_MOVE_TO_TARGET" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="AUTO_MOVE" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="AUTO_MOVE_TARGET_RANGE_MIN" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">10</Value>
+    <Setting Name="AUTO_MOVE_FOLLOW_RANGE_MIN" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">8</Value>
     </Setting>
-    <Setting Name="SELECTED_MOVE_TARGET" Type="System.Int32" Scope="User">
+    <Setting Name="SELECTED_MOVEMENT_MODE" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="AUTO_SPRINT" Type="System.Boolean" Scope="User">
@@ -78,7 +78,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="HOTKEY_TOGGLE_MOVEMENT" Type="System.String" Scope="User">
-      <Value Profile="(Default)">M</Value>
+      <Value Profile="(Default)">C</Value>
     </Setting>
     <Setting Name="HOTKEY_ADD_REM_TARGET_LIST" Type="System.String" Scope="User">
       <Value Profile="(Default)">Insert</Value>
@@ -92,8 +92,32 @@
     <Setting Name="HOTKEY_MODIFIER_REM_TARGET_LIST" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="AUTO_MOVE_TARGET_RANGE_MAX" Type="System.Decimal" Scope="User">
-      <Value Profile="(Default)">15</Value>
+    <Setting Name="AUTO_MOVE_FOLLOW_RANGE_MAX" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="AUTO_TALK_NPCS" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SELECTED_NAVIGATION_PROVIDER" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="AUTO_ACCEPT_QUESTS" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="COMBAT_ROUTINE_REST" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="COMBAT_ROUTINE_PULL_BUFF" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="AUTO_MOVE_TARGET_RANGE" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1.5</Value>
+    </Setting>
+    <Setting Name="HOTKEY_MODIFIER_MOVEMENT_MODE" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="HOTKEY_MOVEMENT_MODE" Type="System.String" Scope="User">
+      <Value Profile="(Default)">F</Value>
     </Setting>
   </Settings>
 </SettingsFile>
