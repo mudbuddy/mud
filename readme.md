@@ -93,7 +93,6 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 - `1.0.0`: Release
 
 ## Planned Updates
-- (Feature) Dynamically Change CR
 - (Feature) Target Mode - Tank Mobs (Gain Aggro)
 - (Feature) Target Mode - Treasure Coffers
 - (Feature) Hotkey For Whitelisting / Blacklisting
