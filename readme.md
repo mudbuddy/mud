@@ -1,4 +1,4 @@
-# Mud Assist 1.1.3
+# Mud Assist 2.0.0
 Mud Assist is Botbase for [Rebornbuddy](http://rebornbuddy.com) that gives full control over your CR.
 It's similar to the Combat Assist Botbase, but gives much more control over the CR.
 
@@ -29,6 +29,47 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
+###2.0 Features
+- `2.0.0`: Swappable Combat Routines
+- `2.0.0`: Auto-Accept Quests
+- `2.0.0`: Auto-Talk to NPCs
+- `2.0.0`: Waypoint-Based Navigation
+- `2.0.0`: Separate Follow Range & Combat Range
+- `2.0.0`: Additional Movement Mode For "Follow"
+- `2.0.0`: Hotkey For Movement Mode Toggle
+- `2.0.0`: New Targeting Mode: Lowest HP Being Tanked
+
+###2.0 Behavior:
+- `2.0.0`: Use Pull Behavior When Attacking Out Of Combat
+- `2.0.0`: Enable / Disable Combat Routine Rest Behavior
+- `2.0.0`: Enable / Disable Combat Routine Pull Buff Behavior
+- `2.0.0`: Selectable Navigation Provider
+- `2.0.0`: Use Combat Behavior For Pulling If No Pull Behavior
+- `2.0.0`: Only Use Combat Behavior IN Combat Unless Pulling W/ It
+- `2.0.0`: Logic Fix: Target Enemy Over Follow Tank To Fix CR Issues
+- `2.0.0`: Don't Sprint Inside Instances
+- `2.0.0`: Allow Pull If Not In Party OR Player Is Tank
+- `2.0.0`: Don't Execute Pull Or Combat Behavior Outside Of Pull Range
+
+####2.0 Bug Fixes / Minor Changes:
+- `2.0.0`: Namespace Updates
+- `2.0.0`: Fix Issues When CR Doesn't Implement Behavior
+- `2.0.0`: Lots Of Refactoring
+- `2.0.0`: Fix Some Navigation Provider Issues
+- `2.0.0`: Tweak Issues W/ Routines
+- `2.0.0`: Fix Bot Navigation With Providers
+- `2.0.0`: Fix Pull Routine
+- `2.0.0`: Navigation Tweaks
+- `2.0.0`: Combat Fixes
+- `2.0.0`: UI Improvements
+- `2.0.0`: Better Default Settings
+- `2.0.0`: Adjust Tab Order
+- `2.0.0`: Follow Tweaks
+- `2.0.0`: Version Update
+- `2.0.0`: Status Bar / Separate Save Button
+- `2.0.0`: Fix Waypoints From Jumping Tanks
+
+###1.0
 - `1.1.3`: Improved Tank Assist Code (Don't Start Combat Until Tank Does)
 - `1.1.3`: Improved Following Logic With Min/Max Range
 - `1.1.3`: Prevent Movement From Interrupting Casting
