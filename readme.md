@@ -3,11 +3,11 @@ Mud Assist is Botbase for [Rebornbuddy](http://rebornbuddy.com) that gives full 
 It's similar to the Combat Assist Botbase, but gives much more control over the CR.
 
 ## Example Settings
-![Settings](http://i.imgur.com/Z6surT2.png)
-![Targeting](http://i.imgur.com/xryvzIY.png)
+![Routine](http://i.imgur.com/QHOMuH7.png)
+![Movement](http://i.imgur.com/M0EIGGS.png)
 
-![Routine](http://i.imgur.com/IdJaw8q.png)
-![Hotkeys](http://i.imgur.com/dE9gpWH.png)
+![Settings](http://i.imgur.com/AY5vjVx.png)
+![Hotkeys](http://i.imgur.com/myAQVXi.png)
 
 More images on [Imgur...](http://imgur.com/a/23tjd#0)
 
