@@ -29,7 +29,7 @@
       </header>
       <section>
         <h1>
-<a id="mud-assist" class="anchor" href="#mud-assist" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mud Assist</h1>
+<a id="mud-assist-200" class="anchor" href="#mud-assist-200" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mud Assist 2.0.0</h1>
 
 <p>Mud Assist is Botbase for <a href="http://rebornbuddy.com">Rebornbuddy</a> that gives full control over your CR.
 It's similar to the Combat Assist Botbase, but gives much more control over the CR.</p>
@@ -37,8 +37,11 @@ It's similar to the Combat Assist Botbase, but gives much more control over the 
 <h2>
 <a id="example-settings" class="anchor" href="#example-settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Settings</h2>
 
-<p><img src="http://i.imgur.com/CdyuJye.png" alt="Settings">
-<img src="http://i.imgur.com/uR5CKA5.png" alt="Targeting"></p>
+<p><img src="http://i.imgur.com/QHOMuH7.png" alt="Routine">
+<img src="http://i.imgur.com/M0EIGGS.png" alt="Movement"></p>
+
+<p><img src="http://i.imgur.com/AY5vjVx.png" alt="Settings">
+<img src="http://i.imgur.com/myAQVXi.png" alt="Hotkeys"></p>
 
 <p>More images on <a href="http://imgur.com/a/23tjd#0">Imgur...</a></p>
 
@@ -47,11 +50,14 @@ It's similar to the Combat Assist Botbase, but gives much more control over the 
 
 <ul>
 <li>Pause/Unpause with Hotkey</li>
-<li>Initiate Attacks While Out of Combat</li>
-<li>Heal While Out of Combat</li>
+<li>Optional Auto Sprint Out of Combat</li>
+<li>Initiate Attacks While Out of Combat (if Combat Routine Supports)</li>
+<li>Heal While Out of Combat (if Combat Routine Supports)</li>
+<li>Move In Range of Target or Tank</li>
+<li>Optional Facing Target</li>
 <li>Enable / Disable Specific Parts of the Combat Routine, such as PreCombatBuff/Heal/CombatBuff/Combat</li>
-<li>Automatic Tank-Assist In Parties</li>
-<li>Auto Targeting / Target Filtering</li>
+<li>Optional Tank Assist (Target Tank's Target)</li>
+<li>Auto Targeting / Target Whitelisting/Blacklisting</li>
 <li>Persistent Settings</li>
 </ul>
 
@@ -69,9 +75,148 @@ It's similar to the Combat Assist Botbase, but gives much more control over the 
 <h2>
 <a id="change-log" class="anchor" href="#change-log" aria-hidden="true"><span class="octicon octicon-link"></span></a>Change Log</h2>
 
+<h3>
+<a id="20-features" class="anchor" href="#20-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.0 Features</h3>
+
 <ul>
 <li>
+<code>2.0.0</code>: Swappable Combat Routines</li>
+<li>
+<code>2.0.0</code>: Auto-Accept Quests</li>
+<li>
+<code>2.0.0</code>: Auto-Talk to NPCs</li>
+<li>
+<code>2.0.0</code>: Waypoint-Based Navigation</li>
+<li>
+<code>2.0.0</code>: Separate Follow Range &amp; Combat Range</li>
+<li>
+<code>2.0.0</code>: Additional Movement Mode For "Follow"</li>
+<li>
+<code>2.0.0</code>: Hotkey For Movement Mode Toggle</li>
+<li>
+<code>2.0.0</code>: New Targeting Mode: Lowest HP Being Tanked</li>
+</ul>
+
+<h3>
+<a id="20-behavior" class="anchor" href="#20-behavior" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.0 Behavior:</h3>
+
+<ul>
+<li>
+<code>2.0.0</code>: Use Pull Behavior When Attacking Out Of Combat</li>
+<li>
+<code>2.0.0</code>: Enable / Disable Combat Routine Rest Behavior</li>
+<li>
+<code>2.0.0</code>: Enable / Disable Combat Routine Pull Buff Behavior</li>
+<li>
+<code>2.0.0</code>: Selectable Navigation Provider</li>
+<li>
+<code>2.0.0</code>: Use Combat Behavior For Pulling If No Pull Behavior</li>
+<li>
+<code>2.0.0</code>: Only Use Combat Behavior IN Combat Unless Pulling W/ It</li>
+<li>
+<code>2.0.0</code>: Logic Fix: Target Enemy Over Follow Tank To Fix CR Issues</li>
+<li>
+<code>2.0.0</code>: Don't Sprint Inside Instances</li>
+<li>
+<code>2.0.0</code>: Allow Pull If Not In Party OR Player Is Tank</li>
+<li>
+<code>2.0.0</code>: Don't Execute Pull Or Combat Behavior Outside Of Pull Range</li>
+</ul>
+
+<h4>
+<a id="20-bug-fixes--minor-changes" class="anchor" href="#20-bug-fixes--minor-changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.0 Bug Fixes / Minor Changes:</h4>
+
+<ul>
+<li>
+<code>2.0.0</code>: Namespace Updates</li>
+<li>
+<code>2.0.0</code>: Fix Issues When CR Doesn't Implement Behavior</li>
+<li>
+<code>2.0.0</code>: Lots Of Refactoring</li>
+<li>
+<code>2.0.0</code>: Fix Some Navigation Provider Issues</li>
+<li>
+<code>2.0.0</code>: Tweak Issues W/ Routines</li>
+<li>
+<code>2.0.0</code>: Fix Bot Navigation With Providers</li>
+<li>
+<code>2.0.0</code>: Fix Pull Routine</li>
+<li>
+<code>2.0.0</code>: Navigation Tweaks</li>
+<li>
+<code>2.0.0</code>: Combat Fixes</li>
+<li>
+<code>2.0.0</code>: UI Improvements</li>
+<li>
+<code>2.0.0</code>: Better Default Settings</li>
+<li>
+<code>2.0.0</code>: Adjust Tab Order</li>
+<li>
+<code>2.0.0</code>: Follow Tweaks</li>
+<li>
+<code>2.0.0</code>: Version Update</li>
+<li>
+<code>2.0.0</code>: Status Bar / Separate Save Button</li>
+<li>
+<code>2.0.0</code>: Fix Waypoints From Jumping Tanks</li>
+</ul>
+
+<h3>
+<a id="10" class="anchor" href="#10" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.0</h3>
+
+<ul>
+<li>
+<code>1.1.3</code>: Improved Tank Assist Code (Don't Start Combat Until Tank Does)</li>
+<li>
+<code>1.1.3</code>: Improved Following Logic With Min/Max Range</li>
+<li>
+<code>1.1.3</code>: Prevent Movement From Interrupting Casting</li>
+<li>
+<code>1.1.2</code>: Hotkeys For Add/Remove Target</li>
+<li>
+<code>1.1.2</code>: Can Now Acquire &amp; Follow Targets While Mounted</li>
+<li>
+<code>1.1.2</code>: Additional Target Filter For "None"</li>
+<li>
+<code>1.1.2</code>: Numerous Target Filter Fixes / Enhancement</li>
+<li>
+<code>1.1.2</code>: Get FFXIV Process Before Flashing Message (thanks newb23)</li>
+<li>
+<code>1.1.2</code>: Use GameSettingsManager.FaceTargetOnAction For Facing (thanks newb23)</li>
+<li>
+<code>1.1.2</code>: Other Various Bug Tweaks / Fixes</li>
+<li>
+<code>1.1.1</code>: Minor bug fixes</li>
+<li>
+<code>1.1.0</code>: Add Facing/Movement</li>
+<li>
+<code>1.1.0</code>: Target List Enhancements</li>
+<li>
+<code>1.1.0</code>: UI Improvements / Flash Messages</li>
+<li>
+<code>1.0.6</code>: Targeting by Distance. Execute CR while moving.</li>
+<li>
+<code>1.0.5</code>: Allow list to function as Blacklist or Whitelist</li>
+<li>
+<code>1.0.4</code>: Fix null pointer on Empty Hotkeys</li>
+<li>
+<code>1.0.3</code>: Improved Targeting Mode / Hotkeys</li>
+<li>
+<code>1.0.2</code>: Null check on GetPartyTank to prevent Log spam when Tank not in group</li>
+<li>
+<code>1.0.1</code>: Fix for CR toggle</li>
+<li>
 <code>1.0.0</code>: Release</li>
+</ul>
+
+<h2>
+<a id="planned-updates" class="anchor" href="#planned-updates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Planned Updates</h2>
+
+<ul>
+<li>(Feature) Target Mode - Tank Mobs (Gain Aggro)</li>
+<li>(Feature) Target Mode - Treasure Coffers</li>
+<li>(Feature) Hotkey For Whitelisting / Blacklisting</li>
+<li>Have any better ideas? PM me.</li>
 </ul>
       </section>
       <footer>
