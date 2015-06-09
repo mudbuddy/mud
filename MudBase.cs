@@ -23,7 +23,7 @@ namespace Mud
     public class MudBase : BotBase
     {
         public static String LastTargetName = null;
-        public const  String Version        = "2.0.0";
+        public const  String Version        = "2.0.1";
 
         #region Selectable Values
 
@@ -241,18 +241,14 @@ namespace Mud
                                     && IsValidEnemy(Core.Player.CurrentTarget)
                                     && Settings.Default.COMBAT_ROUTINE_PULL
                                     && (!PartyManager.IsInParty || IsTank(Core.Player))
-                                    && Core.Player.CurrentTarget.Location.Distance3D(Core.Player.Location) <= RoutineManager.Current.PullRange,
+                                    && Core.Player.CurrentTarget.Location.Distance3D(Core.Player.Location) <= (RoutineManager.Current.PullRange + Core.Player.CurrentTarget.CombatReach + (float)Settings.Default.AUTO_MOVE_TARGET_RANGE),
                                 new PrioritySelector(
                                     RoutineManager.Current.PullBehavior,
                                     RoutineManager.Current.CombatBehavior)),
                     // Executed In Combat
                             new Decorator(
                                 req => !Core.Player.IsMounted
-                                    && (Core.Player.InCombat
-                                        || (TargetingModes[Settings.Default.SELECTED_TARGETING_MODE].Equals("Assist Tank")
-                                            && PartyManager.IsInParty
-                                            && PartyTank != null
-                                            && PartyTank.InCombat)),
+                                    && MudBase.InCombat,
                                 new PrioritySelector(
                     // Combat Buffs
                                     new Decorator(
@@ -266,7 +262,7 @@ namespace Mud
                                             && Settings.Default.COMBAT_ROUTINE_COMBAT
                                             && !Core.Player.IsMounted
                                             && IsValidEnemy(Core.Player.CurrentTarget)
-                                            && Core.Player.CurrentTarget.Location.Distance3D(Core.Player.Location) <= RoutineManager.Current.PullRange,
+                                            && Core.Player.CurrentTarget.Location.Distance3D(Core.Player.Location) <= (RoutineManager.Current.PullRange + Core.Player.CurrentTarget.CombatReach + (float)Settings.Default.AUTO_MOVE_TARGET_RANGE),
                                         RoutineManager.Current.CombatBehavior))))));
             }
         }
@@ -510,7 +506,14 @@ namespace Mud
         {
             get
             {
-                return VisiblePartyMembers.Where(p => p.InCombat) != null;
+                return VisiblePartyMembers.Where(p => 
+                    p.IsAlive 
+                    && p.HasTarget 
+                    && p.InCombat
+                    && p.TargetCharacter != null
+                    && p.TargetCharacter.HasTarget
+                    && p.TargetCharacter.CurrentHealth < p.TargetCharacter.MaxHealth
+                ) != null;
             }
         }
 

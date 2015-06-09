@@ -231,5 +231,13 @@ namespace Mud.Helpers
             WaypointManager.CurrentWaypoints.Clear();
             Navigator.PlayerMover.MoveStop();
         }
+
+        // Needs Work
+        internal static bool IsStuck()
+        {
+            return WaypointManager.IsNavigating
+                && (!MovementManager.IsMoving
+                    || MovementManager.IsMoving && MovementManager.Speed < 2);
+        }
     }
 }
