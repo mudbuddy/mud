@@ -1,4 +1,4 @@
-# Mud Assist 2.0.1
+# Mud Assist 2.0.2
 Mud Assist is Botbase for [Rebornbuddy](http://rebornbuddy.com) that gives full control over your CR.
 It's similar to the Combat Assist Botbase, but gives much more control over the CR.
 
@@ -29,7 +29,7 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
-
+- `2.0.2`: Fix Issues With Facing Not Setting Properly
 - `2.0.1`: Fix Combat Reach Issues For Melee Classes (Thanks **torfin**)
 - `2.0.1`: Fix Some Combat Checking Issues (Thanks **torfin**)
 - `2.0.1`: Fix Minor Combat Issue w/ **Being Tanked** Mode

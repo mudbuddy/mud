@@ -23,7 +23,7 @@ namespace Mud
     public class MudBase : BotBase
     {
         public static String LastTargetName = null;
-        public const  String Version        = "2.0.1";
+        public const  String Version        = "2.0.2";
 
         #region Selectable Values
 

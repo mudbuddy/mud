@@ -609,6 +609,7 @@
             this.cbxAutoFace.Tag = "XC";
             this.cbxAutoFace.Text = "Auto Face Target";
             this.cbxAutoFace.UseVisualStyleBackColor = true;
+            this.cbxAutoFace.CheckedChanged += new System.EventHandler(this.OnCheckedAutoFace);
             // 
             // tabTargeting
             // 
@@ -1284,19 +1285,19 @@
             // tspPauseStatus
             // 
             this.tspPauseStatus.Name = "tspPauseStatus";
-            this.tspPauseStatus.Size = new System.Drawing.Size(98, 17);
+            this.tspPauseStatus.Size = new System.Drawing.Size(108, 17);
             this.tspPauseStatus.Spring = true;
             // 
             // tspMovementStatus
             // 
             this.tspMovementStatus.Name = "tspMovementStatus";
-            this.tspMovementStatus.Size = new System.Drawing.Size(98, 17);
+            this.tspMovementStatus.Size = new System.Drawing.Size(108, 17);
             this.tspMovementStatus.Spring = true;
             // 
             // tspFollowModeStatus
             // 
             this.tspFollowModeStatus.Name = "tspFollowModeStatus";
-            this.tspFollowModeStatus.Size = new System.Drawing.Size(98, 17);
+            this.tspFollowModeStatus.Size = new System.Drawing.Size(108, 17);
             this.tspFollowModeStatus.Spring = true;
             // 
             // tspTargetModeStatus
