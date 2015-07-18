@@ -33,10 +33,6 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 - `2.0.1`: Fix Combat Reach Issues For Melee Classes (Thanks **torfin**)
 - `2.0.1`: Fix Some Combat Checking Issues (Thanks **torfin**)
 - `2.0.1`: Fix Minor Combat Issue w/ **Being Tanked** Mode
-
-### 2.0
-
-###2.0 Features
 - `2.0.0`: Swappable Combat Routines
 - `2.0.0`: Auto-Accept Quests
 - `2.0.0`: Auto-Talk to NPCs
@@ -45,8 +41,6 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 - `2.0.0`: Additional Movement Mode For "Follow"
 - `2.0.0`: Hotkey For Movement Mode Toggle
 - `2.0.0`: New Targeting Mode: Lowest HP Being Tanked
-
-###2.0 Behavior:
 - `2.0.0`: Use Pull Behavior When Attacking Out Of Combat
 - `2.0.0`: Enable / Disable Combat Routine Rest Behavior
 - `2.0.0`: Enable / Disable Combat Routine Pull Buff Behavior
@@ -57,8 +51,6 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 - `2.0.0`: Don't Sprint Inside Instances
 - `2.0.0`: Allow Pull If Not In Party OR Player Is Tank
 - `2.0.0`: Don't Execute Pull Or Combat Behavior Outside Of Pull Range
-
-####2.0 Bug Fixes / Minor Changes:
 - `2.0.0`: Namespace Updates
 - `2.0.0`: Fix Issues When CR Doesn't Implement Behavior
 - `2.0.0`: Lots Of Refactoring
@@ -75,8 +67,6 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 - `2.0.0`: Version Update
 - `2.0.0`: Status Bar / Separate Save Button
 - `2.0.0`: Fix Waypoints From Jumping Tanks
-
-###1.0
 - `1.1.3`: Improved Tank Assist Code (Don't Start Combat Until Tank Does)
 - `1.1.3`: Improved Following Logic With Min/Max Range
 - `1.1.3`: Prevent Movement From Interrupting Casting
@@ -102,5 +92,4 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 ## Planned Updates
 - (Feature) Target Mode - Tank Mobs (Gain Aggro)
 - (Feature) Target Mode - Treasure Coffers
-- (Feature) Hotkey For Whitelisting / Blacklisting
-- Have any better ideas? PM me.
+- Have any better ideas? PM me or open a request on Github. Thanks!
