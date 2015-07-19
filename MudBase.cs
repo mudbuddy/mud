@@ -23,7 +23,7 @@ namespace Mud
     public class MudBase : BotBase
     {
         public static String LastTargetName = null;
-        public const  String Version        = "2.0.2";
+        public const  String Version        = "2.0.3";
 
         #region Selectable Values
 
@@ -464,6 +464,7 @@ namespace Mud
                 case ClassJobType.Warrior:
                 case ClassJobType.Paladin:
                 case ClassJobType.Gladiator:
+                case ClassJobType.DarkKnight:
                     return true;
                 default:
                     return false;
