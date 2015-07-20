@@ -23,7 +23,7 @@ namespace Mud
     public class MudBase : BotBase
     {
         public static String LastTargetName = null;
-        public const  String Version        = "2.0.3";
+        public const  String Version        = "2.0.4";
 
         #region Selectable Values
 
@@ -122,6 +122,7 @@ namespace Mud
                     new Decorator(
                         req => TreeTick()
                             && !Settings.Default.COMBAT_ROUTINE_PAUSED
+                            && Core.Player.IsAlive
                             && !Core.Player.IsCasting
                             && (!MovementManager.IsMoving
                                 || Settings.Default.COMBAT_ROUTINE_EXECUTE_WHILE_MOVING),
