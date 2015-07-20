@@ -29,6 +29,7 @@ More images on [Imgur...](http://imgur.com/a/23tjd#0)
 3. Select `Mud Assist` from the **BotBase Dropdown Menu** after starting **RebornBuddy**
 
 ## Change Log
+- `2.0.4`: Logging Enhancements For Settings
 - `2.0.4`: Check If Player Is Alive Before Running Root
 - `2.0.3`: DarkKnight Tank Support
 - `2.0.2`: Fix Issues With Facing Not Setting Properly
