@@ -90,7 +90,7 @@ namespace Mud
 
         public override void Initialize()
         {
-            Logging.Write(LogLevel.PRIMARY, "Initializing");
+            Logging.Write(LogLevel.PRIMARY, "Initializing Mud Assist v{0}",Version);
             MudBase.ResetHotkeys();
         }
 
